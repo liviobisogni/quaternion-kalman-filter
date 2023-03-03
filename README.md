@@ -117,56 +117,54 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	[Eq. pre-34 Suh]<br>
 	It computes Shu's acceleration mode; it is able to detect external acceleration.
 	* INPUT:
-		* lambda, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The 3 eigenvalues of the matrix U, at times k, k-1, k-2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
-		* mu, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Defined after \[Eq. 32 Suh\] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
+		* `lambda`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The 3 eigenvalues of the matrix U, at times k, k-1, k-2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
+		* `mu`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Defined after \[Eq. 32 Suh\] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
 	* OUTPUT:
-		* acceleration_mode,    Possible values:
+		* `acceleration_mode`,    Possible values:
 			* '1' (i.e., 'Mode 1' aka 'No external acceleration Mode')
 			* '2' (i.e., 'Mode 2' aka 'External acceleration Mode')
 
 2. `create_extAcc.m`
 	```matlab
-	function a_b = create_extAcc(a_b_OLD, t_i, ext_acc, length)
+	function Q_hat_a_b = estimateExtAccCov_Sab(y_a)
 	```
 	It generates constant external acceleration ext_acc from t_i to t_i + length, overwriting previous external acceleration a\_b\_OLD.
 	* INPUT:
-		* a\_b\_OLD, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Previous external acceleration; it'll be overwritten &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x N_samples) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m / s^2]
-		* t_i, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ext. acc. starting (initial) time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
-		* ext_acc, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ext. acc. constant value &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m / s^2]
-		* length, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ext. acc. duration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
+		* `a_b_OLD`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Previous external acceleration; it'll be overwritten &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x N_samples) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m / s^2]
+		* `t_i`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ext. acc. starting (initial) time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
+		* `ext_acc`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ext. acc. constant value &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m / s^2]
+		* `length`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ext. acc. duration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
 	* OUTPUT:
-		* a\_b, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; External acceleration a\_b(t) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x N_samples) vector  [m / s^2]
+		* `a_b`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; External acceleration a\_b(t) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x N_samples) vector  [m / s^2]
 
-3. `estimateExtAccCov_Sab.m`<br>
-[Eq. 37 Suh]<br>
-It implements the accelerometer norm-based adaptive algorithm by A. M. Sabatini for estimating external acceleration covariance matrix Q\_\_a\_b.
+3. `estimateExtAccCov_Sab.m`
+	```matlab
+	function a_b = create_extAcc(a_b_OLD, t_i, ext_acc, length)
+	```
+	[Eq. 37 Suh]<br>
+	It implements the accelerometer norm-based adaptive algorithm by A. M. Sabatini for estimating external acceleration covariance matrix Q\_\_a\_b.
+	* INPUT:
+		* `y_a`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Measured acceleration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m/s^2]
+	* OUTPUT:
+		* `Q_hat_a_b`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Estimated external acceleration covariance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
-	INPUT:
-	
-	* y_a, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Measured acceleration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m/s^2]
-
-	OUTPUT:
-	
-	* Q\_hat\_a\_b, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Estimated external acceleration covariance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
-
-4. `estimateExtAccCov_Suh.m`<br>
-[Eq. 34 - 35 Suh]<br>
-It implements the adaptive estimation algorithm by Y. S. Suh for estimating external acceleration covariance matrix Q\_\_a\_b.
-
-	INPUT:
-	
-	* r\_a, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Residual in the accelerometer measurement update &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x M_1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m / s^2]
-	* lambda, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Threshold between first and second condition &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
-	* mu, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Defined after \[Eq. 32 Suh] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
-	* H_a, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Accelerometer measurement matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 9) matrix
-	* P__next\_prev, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; State covariance matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (9 x 9) matrix
-	* R_a, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Covariance measurement matrix of the accelerometer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix
-
-	OUTPUT:
-	
-	* Q\_hat\_a\_b, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Estimated external acceleration covariance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix
-	* lambda, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (newly computed) lambda &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
-	* mu, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (newly computed) mu &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
+4. `estimateExtAccCov_Suh.m`
+	```matlab
+	function [Q_hat_a_b, lambda, mu] = estimateExtAccCov_Suh(r_a, lambda, mu, H_a, P__next_prev, R_a)
+	```
+	[Eq. 34 - 35 Suh]<br>
+	It implements the adaptive estimation algorithm by Y. S. Suh for estimating external acceleration covariance matrix Q\_\_a\_b.
+	* INPUT:
+		* `r_a`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Residual in the accelerometer measurement update &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x M_1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m / s^2]
+		* `lambda`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Threshold between first and second condition &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
+		* `mu`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Defined after \[Eq. 32 Suh] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
+		* `H_a`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Accelerometer measurement matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 9) matrix
+		* `P__next_prev`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; State covariance matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (9 x 9) matrix
+		* `R_a`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Covariance measurement matrix of the accelerometer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix
+	* OUTPUT:
+		* `Q_hat_a_b`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Estimated external acceleration covariance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix
+		* `lambda`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (newly computed) lambda &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
+		* `mu`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (newly computed) mu &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
 
 5. `euler2quat.m`<br>
 [[https://marc-b-reynolds.github.io/math/2017/04/18/TaitEuler.html#mjx-eqn%3Aeq%3Atait](https://marc-b-reynolds.github.io/math/2017/04/18/TaitEuler.html#mjx-eqn%3Aeq%3Atait), Eq. 2 - 3 - 4 - 5]<br>
