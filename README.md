@@ -114,8 +114,8 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	```matlab
 	function acceleration_mode = computeAccMode(lambda, mu)
 	```
-[Eq. pre-34 Suh]<br>
-It computes Shu's acceleration mode; it is able to detect external acceleration.
+	[Eq. pre-34 Suh]<br>
+	It computes Shu's acceleration mode; it is able to detect external acceleration.
 
 	INPUT:
 	
