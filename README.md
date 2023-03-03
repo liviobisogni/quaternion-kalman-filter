@@ -110,35 +110,32 @@ plot_detected_ext_acc: if '1', plot external acceleration detection instant dots
 ### Functions
 The __functions__ folder includes a set of low-level MATLAB functions used by the scripts in the 'scripts' folder. A list of the functions contained in the folder and their descriptions can be found below.
 
-1. `computeAccMode.m`<br>
+1. `computeAccMode.m`
 	```matlab
 	function acceleration_mode = computeAccMode(lambda, mu)
 	```
 	[Eq. pre-34 Suh]<br>
 	It computes Shu's acceleration mode; it is able to detect external acceleration.
-
 	* INPUT:
 		* lambda, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The 3 eigenvalues of the matrix U, at times k, k-1, k-2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
 		* mu, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Defined after \[Eq. 32 Suh\] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
-	
 	* OUTPUT:
 		* acceleration_mode,    Possible values:
 			* '1' (i.e., 'Mode 1' aka 'No external acceleration Mode')
 			* '2' (i.e., 'Mode 2' aka 'External acceleration Mode')
 
-2. `create_extAcc.m`<br>
-It generates constant external acceleration ext_acc from t_i to t_i + length, overwriting previous external acceleration a\_b\_OLD.
-
-	INPUT:
-	
-	* a\_b\_OLD, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Previous external acceleration; it'll be overwritten &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x N_samples) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m / s^2]
-	* t_i, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ext. acc. starting (initial) time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
-	* ext_acc, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ext. acc. constant value &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m / s^2]
-	* length, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ext. acc. duration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
-	
-	OUTPUT:
-	
-	* a\_b, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; External acceleration a\_b(t) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x N_samples) vector  [m / s^2]
+2. `create_extAcc.m`
+	```matlab
+	function a_b = create_extAcc(a_b_OLD, t_i, ext_acc, length)
+	```
+	It generates constant external acceleration ext_acc from t_i to t_i + length, overwriting previous external acceleration a\_b\_OLD.
+	* INPUT:
+		* a\_b\_OLD, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Previous external acceleration; it'll be overwritten &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x N_samples) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m / s^2]
+		* t_i, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ext. acc. starting (initial) time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
+		* ext_acc, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ext. acc. constant value &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m / s^2]
+		* length, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ext. acc. duration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
+	* OUTPUT:
+		* a\_b, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; External acceleration a\_b(t) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x N_samples) vector  [m / s^2]
 
 3. `estimateExtAccCov_Sab.m`<br>
 [Eq. 37 Suh]<br>
