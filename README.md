@@ -117,16 +117,14 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	[Eq. pre-34 Suh]<br>
 	It computes Shu's acceleration mode; it is able to detect external acceleration.
 
-	INPUT:
+	* INPUT:
+		* lambda, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The 3 eigenvalues of the matrix U, at times k, k-1, k-2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
+		* mu, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Defined after \[Eq. 32 Suh\] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
 	
-	* lambda, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The 3 eigenvalues of the matrix U, at times k, k-1, k-2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
-	* mu, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Defined after \[Eq. 32 Suh\] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
-	
-	OUTPUT:
-	
-	* acceleration_mode,    Possible values:
-		* '1' (i.e., 'Mode 1' aka 'No external acceleration Mode')
-		* '2' (i.e., 'Mode 2' aka 'External acceleration Mode')
+	* OUTPUT:
+		* acceleration_mode,    Possible values:
+			* '1' (i.e., 'Mode 1' aka 'No external acceleration Mode')
+			* '2' (i.e., 'Mode 2' aka 'External acceleration Mode')
 
 2. `create_extAcc.m`<br>
 It generates constant external acceleration ext_acc from t_i to t_i + length, overwriting previous external acceleration a\_b\_OLD.
