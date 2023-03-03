@@ -1,4 +1,4 @@
-function C = euler2RotMat(r)
+function C = euler2RotMat(angles)
 %‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 % EULER2ROTMAT Converts Euler angles to rotation matrix (aka direction cosine matrix, DCM).
 % The Euler angles rotate the frame n (navigation) to the frame b (body) according to 'zyx' sequence.
@@ -17,42 +17,15 @@ function C = euler2RotMat(r)
     % Check number of arguments
     narginchk(1,1);
     
-    if (~isequal(size(r), [3 1]))
-        error('r must be a (3 x 1) vector.');
+    if (~isequal(size(angles), [3 1]))
+        error('angles must be a (3 x 1) vector.');
     end
     
-    r1 = r(1);      % roll
-    r2 = r(2);      % pitch
-    r3 = r(3);      % yaw
+    r1 = angles(1);      % roll
+    r2 = angles(2);      % pitch
+    r3 = angles(3);      % yaw
     
-%     r1 = -r1;
-%     r2 = -r2;
-%     r3 = -r3;
-    
-    C = rotX(r1) * rotY(r2) * rotZ(r3);                 % "old"; semi-OK
-    
-%     C = rotZ(r3) * rotY(r2) * rotX(r1);               % "new"; semi-OK!!!!!!
-%     
-%     C_n_b = rotX(r1) * rotY(r2) * rotZ(r3);
-%     C_b_n = rotZ(r3) * rotY(r2) * rotX(r1);
-%     
-%     C_n_b_TRANS = C_n_b';
-%     C_b_n_TRANS = C_b_n';
-    
-
-%     C = C';
-    
-%     C = rotZ(r1) * rotY(r2) * rotX(r3);                 % NEW, maybe
-    
-    
-%         C = rotX(-r1) * rotY(-r2) * rotZ(-r3);         % CANC
-    
-%     C = rotX(r3) * rotY(r2) * rotZ(r1);         % CANC
-
-
-
-
-
+    C = rotX(r1) * rotY(r2) * rotZ(r3);
 
 %% ALTERNATIVE method
 %     % [Eq. 1 "Quaternion-Based Unscented Kalman Filter for Accurate Indoor
