@@ -117,12 +117,13 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	[Eq. pre-34 Suh]<br>
 	It computes Shu's acceleration mode; it is able to detect external acceleration.
 	* INPUT:
-		* `lambda`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The 3 eigenvalues of the matrix U, at times k, k-1, k-2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
-		* `mu`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Defined after \[Eq. 32 Suh\] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
+		* `lambda` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The 3 eigenvalues of the matrix U, at times k, k-1, k-2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
+		* `mu` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Defined after \[Eq. 32 Suh\] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
 	* OUTPUT:
 		* `acceleration_mode`,    Possible values:
 			* '1' (i.e., 'Mode 1' aka 'No external acceleration Mode')
 			* '2' (i.e., 'Mode 2' aka 'External acceleration Mode')
+
 
 2. `create_extAcc.m`
 	```matlab
@@ -130,12 +131,13 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	```
 	It generates constant external acceleration ext_acc from t_i to t_i + length, overwriting previous external acceleration a\_b\_OLD.
 	* INPUT:
-		* `a_b_OLD`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Previous external acceleration; it'll be overwritten &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x N_samples) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m / s^2]
-		* `t_i`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ext. acc. starting (initial) time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
-		* `ext_acc`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ext. acc. constant value &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m / s^2]
-		* `length`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ext. acc. duration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
+		* `a_b_OLD` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Previous external acceleration; it'll be overwritten &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x N_samples) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m / s^2]
+		* `t_i` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ext. acc. starting (initial) time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
+		* `ext_acc` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ext. acc. constant value &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m / s^2]
+		* `length` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ext. acc. duration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
 	* OUTPUT:
-		* `a_b`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; External acceleration a\_b(t) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x N_samples) vector  [m / s^2]
+		* `a_b` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; External acceleration a\_b(t) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x N_samples) vector  [m / s^2]
+
 
 3. `estimateExtAccCov_Sab.m`
 	```matlab
@@ -144,9 +146,10 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	[Eq. 37 Suh]<br>
 	It implements the accelerometer norm-based adaptive algorithm by A. M. Sabatini for estimating external acceleration covariance matrix Q\_\_a\_b.
 	* INPUT:
-		* `y_a`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Measured acceleration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m/s^2]
+		* `y_a` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Measured acceleration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m/s^2]
 	* OUTPUT:
-		* `Q_hat_a_b`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Estimated external acceleration covariance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `Q_hat_a_b` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Estimated external acceleration covariance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+
 
 4. `estimateExtAccCov_Suh.m`
 	```matlab
@@ -155,98 +158,98 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	[Eq. 34 - 35 Suh]<br>
 	It implements the adaptive estimation algorithm by Y. S. Suh for estimating external acceleration covariance matrix Q\_\_a\_b.
 	* INPUT:
-		* `r_a`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Residual in the accelerometer measurement update &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x M_1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m / s^2]
-		* `lambda`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Threshold between first and second condition &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
-		* `mu`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Defined after \[Eq. 32 Suh] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
-		* `H_a`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Accelerometer measurement matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 9) matrix
-		* `P__next_prev`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; State covariance matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (9 x 9) matrix
-		* `R_a`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Covariance measurement matrix of the accelerometer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix
+		* `r_a` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Residual in the accelerometer measurement update &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x M_1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m / s^2]
+		* `lambda` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Threshold between first and second condition &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
+		* `mu` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Defined after \[Eq. 32 Suh] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
+		* `H_a` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Accelerometer measurement matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 9) matrix
+		* `P__next_prev` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; State covariance matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (9 x 9) matrix
+		* `R_a` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Covariance measurement matrix of the accelerometer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix
 	* OUTPUT:
-		* `Q_hat_a_b`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Estimated external acceleration covariance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix
-		* `lambda`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (newly computed) lambda &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
-		* `mu`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (newly computed) mu &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
+		* `Q_hat_a_b` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Estimated external acceleration covariance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix
+		* `lambda` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (newly computed) lambda &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
+		* `mu` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (newly computed) mu &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
 
-5. `euler2quat.m`<br>
-[[https://marc-b-reynolds.github.io/math/2017/04/18/TaitEuler.html#mjx-eqn%3Aeq%3Atait](https://marc-b-reynolds.github.io/math/2017/04/18/TaitEuler.html#mjx-eqn%3Aeq%3Atait), Eq. 2 - 3 - 4 - 5]<br>
-It converts Euler angles to quaternion.
 
-	INPUT:
-	
-	* angles, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Euler angles (angles = [roll; pitch; yaw]) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
+5. `euler2quat.m`
+	```matlab
+	function q = euler2quat(angles)
+	```
+	[[https://marc-b-reynolds.github.io/math/2017/04/18/TaitEuler.html#mjx-eqn%3Aeq%3Atait](https://marc-b-reynolds.github.io/math/2017/04/18/TaitEuler.html#mjx-eqn%3Aeq%3Atait), Eq. 2 - 3 - 4 - 5]<br>
+	It converts Euler angles to quaternion.
+	* INPUT:
+		* `angles` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Euler angles (angles = [roll; pitch; yaw]) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
+	* OUTPUT:
+		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
-	OUTPUT:
-	
-	* q, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
-6. `euler2RotMat.m`<br>
-It converts Euler angles to rotation matrix (aka direction cosine matrix, DCM).
-The Euler angles rotate the frame n (navigation) to the frame b (body) according to 'zyx' sequence.
-
-	INPUT:
-	
-	* angles, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Euler angles (angles = [roll; pitch; yaw]) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
-
-	OUTPUT:
-	
-	* C, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coordinate transformation matrix from n to b            (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+6. `euler2RotMat.m`
+	```matlab
+	function C = euler2RotMat(angles)
+	```
+	It converts Euler angles to rotation matrix (aka direction cosine matrix, DCM).
+	The Euler angles rotate the frame n (navigation) to the frame b (body) according to 'zyx' sequence.
+	* INPUT:
+		* `angles` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Euler angles (angles = [roll; pitch; yaw]) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
+	* OUTPUT:
+		* `C` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coordinate transformation matrix from n to b            (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 			    N.B.: That is v\_b  = C * v\_n.
                             ('\_b' or '\_n' are the frames in which the vector 'v' can be expressed, representing the body and navigation frames, respectively.)
 
-7. `euler_angle_range_three_axis.m`<br>
-It limits Euler angles range.
-For three-axis rotation, the angle ranges are [-pi, pi], [-pi/2, pi/2] and [-pi, pi]
-For two-axis rotation, the angle ranges are [-pi, pi], [0, pi] and [-pi, pi]!
 
-	INPUT:
-	
-	* angles, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Euler angles &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
+7. `euler_angle_range_three_axis.m`
+	```matlab
+	function a = euler_angle_range_three_axis(angles)
+	```
+	It limits Euler angles range.
+	For three-axis rotation, the angle ranges are [-pi, pi], [-pi/2, pi/2] and [-pi, pi].
+	For two-axis rotation, the angle ranges are [-pi, pi], [0, pi] and [-pi, pi].
+	* INPUT:
+		* `angles` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Euler angles &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
+	* OUTPUT:
+		* `a` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Limited Euler angles &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
 
-	OUTPUT:
-	
-	* a, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Limited Euler angles &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
 
-8. `lin_interpolate.m`<br>
-[Eq. pre-34 Suh]<br>
-It linearly interpolates values.
+8. `lin_interpolate.m`
+	```matlab
+	function values_interpolated = lin_interpolate(T, values, N_samples, N_samples__theoretical)
+	```
+	[Eq. pre-34 Suh]<br>
+	It linearly interpolates values.
+	* INPUT:
+		* `T` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time stamp array &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1 x N_samples) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 	[s]
+		* `values` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Array with elements to be interpolated &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1 x N_samples) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 	[-]
+		* `N_samples` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Number of samples of T and values &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `N_samples__theoretical` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Theoretical number of samples &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+	* OUTPUT:
+		* `values_interpolated` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; N\_samples\_\_theoretical interpolated values &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1 x N\_samples\_\_theoretical) array &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]<br>
+		N.B.: N\_samples <= N\_samples\_\_theoretical
 
-	INPUT:
-	
-	* T, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time stamp array &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1 x N_samples) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 	[s]
-	* values, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Array with elements to be interpolated &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1 x N_samples) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 	[-]
-	* N\_samples, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Number of samples of T and values &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
-	* N\_samples\_\_theoretical, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Theoretical number of samples &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
-	* dt, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Constant time step &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
 
-	OUTPUT:
-	
-	* values\_interpolated, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; N\_samples\_\_theoretical interpolated values &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1 x N\_samples\_\_theoretical) array &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]<br>
-	N.B.: N\_samples <= N\_samples\_\_theoretical
+9. `omega2quat.m`
+	```matlab
+	function q = omega2quat(omega)
+	```
+	It creates a pure imaginary quaternion (i.e., null scalar part, that is, q(1) = 0) from the angular velocity omega.
+	Please note: the quaternion thus obtained is NOT a unitary quaternion.
+	* INPUT:
+		* `omega` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
+	* OUTPUT:
+		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
-9. `omega2quat.m`<br>
-It creates a pure imaginary quaternion (i.e., null scalar part, that is, q(1) = 0) from the angular velocity omega.
-Please note: the quaternion thus obtained is NOT a unitary quaternion.
 
-	INPUT:
-	
-	* omega, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
+10. `Omega.m`
+	```matlab
+	function Omega_omega = Omega(omega)
+	```
+	[Eq. A12 ("A Kalman Filter for Nonlinear Attitude Estimation Using Time Variable Matrices and Quaternions" - Alvaro Deibe)]<br>
+	It computes the Omega(omega) matrix.<br>
+	N.B.: Omega(omega) appears in the product of a vector and a quaternion, and is used for example in the quaternion derivative.<br>
+	(N.B.: [Eq. 64 Trawny] DOES NOT work properly anymore, probably since q(1) = q\_0 is the scalar part)
+	* INPUT:
+		* `omega_next` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
+	* OUTPUT:
+		* `Omega__omega` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Omega matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix
 
-	OUTPUT:
-	
-	* q, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
-
-10. `Omega.m`<br>
-[Eq. A12 ("A Kalman Filter for Nonlinear Attitude Estimation Using Time Variable Matrices and Quaternions" - Alvaro Deibe)]<br>
-It computes the Omega(omega) matrix.<br>
-N.B.: Omega(omega) appears in the product of a vector and a quaternion, and is used for example in the quaternion derivative.<br>
-(N.B.: [Eq. 64 Trawny] DOES NOT work properly anymore, probably since q(1) = q\_0 is the scalar part)
-
-	INPUT:
-	
-	* omega_next, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
-
-	OUTPUT:
-	
-	* Omega__omega, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Omega matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix
 
 11. `Omega_avg_omega.m`<br>
 [Eq. 129 Trawny]<br>
