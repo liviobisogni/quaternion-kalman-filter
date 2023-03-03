@@ -127,7 +127,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 
 2. `create_extAcc.m`
 	```matlab
-	function Q_hat_a_b = estimateExtAccCov_Sab(y_a)
+	function a_b = create_extAcc(a_b_OLD, t_i, ext_acc, length)
 	```
 	It generates constant external acceleration ext_acc from t_i to t_i + length, overwriting previous external acceleration a\_b\_OLD.
 	* INPUT:
@@ -141,7 +141,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 
 3. `estimateExtAccCov_Sab.m`
 	```matlab
-	function a_b = create_extAcc(a_b_OLD, t_i, ext_acc, length)
+	function Q_hat_a_b = estimateExtAccCov_Sab(y_a)
 	```
 	[Eq. 37 Suh]<br>
 	It implements the accelerometer norm-based adaptive algorithm by A. M. Sabatini for estimating external acceleration covariance matrix Q\_\_a\_b.
