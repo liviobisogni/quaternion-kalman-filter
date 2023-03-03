@@ -251,207 +251,207 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 		* `Omega__omega` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Omega matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix
 
 
-11. `Omega_avg_omega.m`<br>
-[Eq. 129 Trawny]<br>
-It computes the Omega(omega_avg) matrix.
+11. `Omega_avg_omega.m`
+	```matlab
+	function Omega__avg_omega = Omega_avg_omega(omega_next, omega_prev, dt)
+	```
+	[Eq. 129 Trawny]<br>
+	It computes the Omega(omega_avg) matrix.
+	* INPUT:
+		* `omega_next` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k+1) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
+		* `omega_prev` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
+		* `dt` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time step (dt = t(k+1) - t(k)) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
+	* OUTPUT:
+		* `Omega__avg_omega` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Omega(omega_avg) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
 
-	INPUT:
-	
-	* omega\_next, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k+1) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
-	* omega\_prev, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
-	* dt, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time step (dt = t(k+1) - t(k)) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
 
-	OUTPUT:
-	
-	* Omega\_\_avg\_omega, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Omega(omega_avg) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
+12. `Omega_dot_omega.m`
+	```matlab
+	function Omega__dot_omega = Omega_dot_omega(omega_next, omega_prev, dt)
+	```
+	[Eq. 126 Trawny]<br>
+	It defines the derivative of the turn rate (omega\_dot) and the associated matrix (Omega(omega_dot)), which - in the linear case - is constant.
+	* INPUT:
+		* `omega_next` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k+1) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
+		* `omega_prev` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
+		* `dt` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time step (dt = t(k+1) - t(k)) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
+	* OUTPUT:
+		* `Omega__dot_omega` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Omega matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix
 
-12. `Omega_dot_omega.m`<br>
-[Eq. 126 Trawny]<br>
-It defines the derivative of the turn rate (omega\_dot) and the associated matrix (Omega(omega_dot)), which - in the linear case - is constant.
 
-	INPUT:
-	
-	* omega\_next, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k+1) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
-	* omega\_prev, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
-	* dt, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time step (dt = t(k+1) - t(k)) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
+13. `Phi_matrix.m`
+	```matlab
+	function Phi = Phi_matrix(y_g__next, Phi_mode)
+	```
+	[Eq. post-15 Suh] \('precise') OR [Eq. 16a Suh] \('approximated') OR [Eq. 187 Trawny] \('Trawny')<br>
+	It computes the transition matrix Phi(t + dt, t).
+	* INPUT:
+		* `y_g__next` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Measured angular velocity (i.e., gyro output) y_g(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
+		* `dt` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time step (dt = t(k+1) - t(k))                          scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
+		* `Phi_mode` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Possible values:
+			* 'precise':        [Eq. post-15 Suh]
+			* 'approximated':   [Eq. 16a Suh]
+			* 'Trawny':         [Eq. 187 Trawny]
+	* OUTPUT:
+		* `Phi` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Transition matrix Phi(t + dt, t) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (9 x 9) matrix
 
-	OUTPUT:
-	
-	* Omega\_\_dot\_omega, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Omega matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix
 
-13. `Phi_matrix.m`<br>
-[Eq. post-15 Suh] \('precise') OR [Eq. 16a Suh] \('approximated') OR [Eq. 187 Trawny] \('Trawny')<br>
-It computes the transition matrix Phi(t + dt, t).
+14. `Q_d_matrix.m`
+	```matlab
+	function Q_d = Q_d_matrix(y_g__next, Q_d_mode)
+	```
+	[Eq. post-15 Suh] \('precise') OR [Eq. 16b Suh] \('approximated') OR [Eq. 208 Trawny] \('Trawny')<br>
+	It computes the Noise Covariance Matrix Q\_d.
+	* INPUT:
+		* `y_g__next` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Measured angular velocity (i.e., gyro output) y_g(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
+		* `dt` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time step (dt = t(k+1) - t(k)) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
+		* `time_old` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Current time stamp (t(k+1)) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
+		* `time_new` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Previous time stamp (t(k)) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
+		* `Q_d_mode` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Possible values:
+			* 'precise':        [Eq. post-15 Suh]
+			* 'approximated':   [Eq. 16a Suh]
+	* OUTPUT:
+		* `Q_d` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Noise Covariance Matrix Q\_d(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (9 x 9) matrix
 
-	INPUT:
-	
-	* y\_g\_\_next, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Measured angular velocity (i.e., gyro output) y_g(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
-	* dt, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time step (dt = t(k+1) - t(k))                          scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
-	* Phi_mode, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Possible values:
-		* 'precise':        [Eq. post-15 Suh]
-		* 'approximated':   [Eq. 16a Suh]
-		* 'Trawny':         [Eq. 187 Trawny]
 
-	OUTPUT:
-	
-	* Phi, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Transition matrix Phi(t + dt, t) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (9 x 9) matrix
+15. `quat2euler.m`
+	```matlab
+	function r = quat2euler(q)
+	```
+	[https://marc-b-reynolds.github.io/math/2017/04/18/TaitEuler.html#mjx-eqn%3Aeq%3Atait](https://marc-b-reynolds.github.io/math/2017/04/18/TaitEuler.html#mjx-eqn%3Aeq%3Atait])<br>
+	It converts quaternion to Euler angles.
+	* INPUT:
+		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+	* OUTPUT:
+		* `r` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Euler angles (r = [roll; pitch; yaw]) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
 
-14. `Q_d_matrix.m`<br>
-[Eq. post-15 Suh] \('precise') OR [Eq. 16b Suh] \('approximated') OR [Eq. 208 Trawny] \('Trawny')<br>
-It computes the Noise Covariance Matrix Q\_d.
 
-	INPUT:
-	
-	* y\_g\_\_next, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Measured angular velocity (i.e., gyro output) y_g(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
-	* dt, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time step (dt = t(k+1) - t(k)) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
-	* time_old, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Current time stamp (t(k+1)) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
-	* time_new, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Previous time stamp (t(k)) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
-	* Q\_d\_mode, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Possible values:
-		* 'precise':        [Eq. post-15 Suh]
-		* 'approximated':   [Eq. 16a Suh]
+16. `quat2RotMat.m`
+	```matlab
+	function C_from_q = quat2RotMat(q)
+	```
+	[Eq. 90 Trawny] [Eq. 1 Suh]<br>
+	It computes the rotation matrix associated to the quaternion q.
+	* INPUT:
+		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+	* OUTPUT:
+		* `C_from_q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coordinate transformation matrix associated to q &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
-	OUTPUT:
-	
-	* Q\_d, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Noise Covariance Matrix Q\_d(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (9 x 9) matrix
 
-15. `quat2euler.m`<br>
-[https://marc-b-reynolds.github.io/math/2017/04/18/TaitEuler.html#mjx-eqn%3Aeq%3Atait](https://marc-b-reynolds.github.io/math/2017/04/18/TaitEuler.html#mjx-eqn%3Aeq%3Atait])<br>
-It converts quaternion to Euler angles.
+17. `quatConjugate.m`
+	```matlab
+	function q_conjugate = quatConjugate(q)
+	```
+	[Eq. 13 Trawny]<br>
+	It takes the complex conjugate (that is, the inverse for a unit quaternion) of a given quaternion.<br>
+	N.B.: The inverse rotation is described by the inverse or complex conjugate quaternion).
+	* INPUT:
+		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion q(k) (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+	* OUTPUT:
+		* `q_conjugate` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (not unitary) Quaternion, conjugate of q &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
-	INPUT:
-	
-	* q, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
-	
-	OUTPUT:
-	
-	* r, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Euler angles (r = [roll; pitch; yaw]) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
 
-16. `quat2RotMat.m`<br>
-[Eq. 90 Trawny] [Eq. 1 Suh]<br>
-It computes the rotation matrix associated to the quaternion q.
-	
-	INPUT:
-	
-	* q, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+18. `quatDerivative.m`
+	```matlab
+	function q_dot = quatDerivative(q, omega)
+	```
+	[Eq. 106 Trawny] OR \[Eq. 2 Suh] (and [Eq. 4 Suh])<br>
+	It Computes the quaternion derivative.
+	* INPUT:
+		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `omega` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
+	* OUTPUT:
+		* `q_do`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion derivative of q &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [1 / s]
 
-	OUTPUT:
-	
-	* C\_from\_q, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coordinate transformation matrix associated to q &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
-17. `quatConjugate.m`<br>
-[Eq. 13 Trawny]<br>
-It takes the complex conjugate (that is, the inverse for a unit quaternion) of a given quaternion.<br>
-N.B.: The inverse rotation is described by the inverse or complex conjugate quaternion).
-	
-	INPUT:
-	
-	* q, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion q(k) (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+19. `quatFirstIntegration.m`
+	```matlab
+	function q_next = quatFirstIntegration(q_prev, omega_next, omega_prev, integration_mode)
+	```
+	[Eq. 18 Suh] \('Suh') OR [Eq. 131 Trawny] \('Trawny') OR [Eq. 8 Yuan] \('Yuan')<br>
+	It computes the first order quaternion integration.
+	It makes the assumption of a linear evolution of omega during the integration interval dt.<br>
+	N.B.: DO use 'Suh'; DO NOT use 'Trawny' !!!
+	* INPUT:
+		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion q(k) (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `omega_next` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k+1) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad/s]
+		* `omega_prev` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad/s]
+		* `dt` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Integration interval (dt = t(k+1) - t(k)) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
+		* `integration_mode` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modality of integration:
+			* 'Suh',    [Eq. 18 Suh]
+			* 'Trawny', [Eq. 131 Trawny]
+			* 'Yuan',   [Eq. 8 Yuan]
+	* OUTPUT:
+		* `q_next` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; q(k+1); unit quaternion from integration of q &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
-	OUTPUT:
-	
-	* q\_conjugate, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (not unitary) Quaternion, conjugate of q &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
-18. `quatDerivative.m`<br>
-[Eq. 106 Trawny] OR \[Eq. 2 Suh] (and [Eq. 4 Suh])<br>
-It Computes the quaternion derivative.
-	
-	INPUT:
-	
-	* q, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
-	* omega, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
-	
-	OUTPUT:
-	
-	* q\_dot, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion derivative of q &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [1 / s]
+20. `quatInverse.m`
+	```matlab
+	function q_inverse = quatInverse(q)
+	```
+	[Eq. 13 Trawny]<br>
+	It takes the inverse of a given quaternion.<br>
+	(N.B.: The inverse rotation is described by the inverse - or complex conjugate for unit quaternions quaternion)
+	* INPUT:
+		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion q(k) (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+	* OUTPUT:
+		* `q_inverse` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (not unitary) Quaternion, inverse of q &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
-19. `quatFirstIntegration.m`<br>
-[Eq. 18 Suh] \('Suh') OR [Eq. 131 Trawny] \('Trawny') OR [Eq. 8 Yuan] \('Yuan')<br>
-It computes the first order quaternion integration.
-It makes the assumption of a linear evolution of omega during the integration interval dt.<br>
-N.B.: DO use 'Suh'; DO NOT use 'Trawny' !!!
-	
-	INPUT:
-	
-	* q, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion q(k) (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
-	* omega_next, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k+1) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad/s]
-	* omega_prev, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad/s]
-	* dt, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Integration interval (dt = t(k+1) - t(k)) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
-	* integration_mode, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modality of integration:
-		* 'Suh',    [Eq. 18 Suh]
-		* 'Trawny', [Eq. 131 Trawny]
-		* 'Yuan',   [Eq. 8 Yuan]
-	
-	OUTPUT:
-	
-	* q\_next, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; q(k+1); unit quaternion from integration of q &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
-20. `quatInverse.m`<br>
-[Eq. 13 Trawny]<br>
-It takes the inverse of a given quaternion.<br>
-(N.B.: The inverse rotation is described by the inverse - or complex conjugate for unit quaternions quaternion)
-	
-	INPUT:
-	
-	* q, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion q(k) (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+21. `quatMultiplication.m`
+	```matlab
+	function q_times_p = quatMultiplication(q, p)
+	```
+	[https://en.wikipedia.org/wiki/Quaternion#Hamilton_product](https://en.wikipedia.org/wiki/Quaternion#Hamilton_product)<br>
+	It multiplies the quaternions q and p, thus obtaining their Hamilton product.
+	Please note: the quaternion product is NOT commutative!<br>
+	(N.B.: [Eq. post-5 Trawny] is not used)	
+	* INPUT:
+		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion q(k) (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `p` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion p(k) (p = [p0; p1; p2; p3], p0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+	* OUTPUT:
+		* `q_times_p`        (not unitary) Quaternion, product of (in this order) q and p	(4 x 1) vector      [-]
 
-	OUTPUT:
-	
-	* q\_inverse, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (not unitary) Quaternion, inverse of q &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
-21. `quatMultiplication.m`<br>
-[https://en.wikipedia.org/wiki/Quaternion#Hamilton_product](https://en.wikipedia.org/wiki/Quaternion#Hamilton_product)<br>
-It multiplies the quaternions q and p, thus obtaining their Hamilton product.
-Please note: the quaternion product is NOT commutative!<br>
-(N.B.: [Eq. post-5 Trawny] is not used)
-	
-	INPUT:
-	
-	* q, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion q(k) (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
-	* p, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion p(k) (p = [p0; p1; p2; p3], p0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+22. `rand_range.m`
+	```matlab
+	function x = rand_range(xmin, xmax)
+	```
+	[https://it.mathworks.com/matlabcentral/answers/66763-generate-random-numbers-in-range-from-0-8-to-4](https://it.mathworks.com/matlabcentral/answers/66763-generate-random-numbers-in-range-from-0-8-to-4)<br>
+	It generates a value from the uniform distribution on the interval (xmin, xmax).
+	* INPUT:
+		* `xmin` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Minimum possible value &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `xmax` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maximum possible value &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+	* OUTPUT:
+		* `x` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pseudo-random number in (xmin, xmax) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
-	OUTPUT:
-	
-	* q\_times\_p,        (not unitary) Quaternion, product of (in this order) q and p	(4 x 1) vector      [-]
 
-22. `rand_range.m`<br>
-[https://it.mathworks.com/matlabcentral/answers/66763-generate-random-numbers-in-range-from-0-8-to-4](https://it.mathworks.com/matlabcentral/answers/66763-generate-random-numbers-in-range-from-0-8-to-4)<br>
-It generates a value from the uniform distribution on the interval (xmin, xmax).
+23. `RotMat2euler.m`
+	```matlab
+	function r = RotMat2euler(C)
+	```
+	[https://d3cw3dd2w32x2b.cloudfront.net/wp-content/uploads/2012/07/euler-angles1.pdf](https://d3cw3dd2w32x2b.cloudfront.net/wp-content/uploads/2012/07/euler-angles1.pdf)<br>
+	It converts direction cosine matrix to Euler angles ('zyx' sequence).<br>
+	N.B.: "We’ll follow the notational conventions of Shoemake’s “Euler Angle Conversion”, Graphics Gems IV, pp. 222-9".
+	* INPUT:
+		* `C` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coordinate transformation matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+	* OUTPUT:
+		* `r` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Euler angles (r = [roll; pitch; yaw]) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
 
-	INPUT:
-	
-	* xmin, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Minimum possible value &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
-	* xmax, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maximum possible value &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
-	OUTPUT:
-	
-	* x, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pseudo-random number in (xmin, xmax) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+24. `RotMat2quat.m`
+	```matlab
+	function q = RotMat2quat(C)
+	```
+	[Eq. 98a - 98b - 99a - 99b Trawny]<br>
+	It converts direction cosine matrix to quaternion.
+	* INPUT:
+		* `C` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coordinate transformation matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+	* OUTPUT:
+		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
-23. `RotMat2euler.m`<br>
-[https://d3cw3dd2w32x2b.cloudfront.net/wp-content/uploads/2012/07/euler-angles1.pdf](https://d3cw3dd2w32x2b.cloudfront.net/wp-content/uploads/2012/07/euler-angles1.pdf)<br>
-It converts direction cosine matrix to Euler angles ('zyx' sequence).<br>
-N.B.: "We’ll follow the notational conventions of Shoemake’s “Euler Angle Conversion”, Graphics Gems IV, pp. 222-9".
 
-	INPUT:
-	
-	* C, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coordinate transformation matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
-
-	OUTPUT:
-	
-	* r, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Euler angles (r = [roll; pitch; yaw]) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
-
-24. `RotMat2quat.m`<br>
-[Eq. 98a - 98b - 99a - 99b Trawny]<br>
-It converts direction cosine matrix to quaternion.
-
-	INPUT:
-	
-	* C, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coordinate transformation matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
-
-	OUTPUT:
-	
-	* q, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
-
-25. `rotX.m`<br>
+25. `rotX.m`
 It computes a basic rotation about x-axis by an angle alpha.
 
 	INPUT:
