@@ -110,6 +110,10 @@ plot_detected_ext_acc: if '1', plot external acceleration detection instant dots
 ### Functions
 The __functions__ folder includes a set of low-level MATLAB functions used by the scripts in the 'scripts' folder. A list of the functions contained in the folder and their descriptions can be found below.
 
+'''matlab
+function mode = computeAccMode(lambda, mu)
+'''
+
 1. `computeAccMode.m`<br>
 [Eq. pre-34 Suh]<br>
 It computes Shu's acceleration mode; it is able to detect external acceleration.
