@@ -74,6 +74,7 @@ This script loads real data from the __data__ folder (which one in particular is
 		* '2': linearly interpolates samples (using 'lin_interpolate', located in the 'functions' directory); it is a time-consuming task
 		* '3': loads previously interpolated data
 	otherwise do nothing
+
 <br>Please note: paths should be adjusted according to your real data folder location.
 
 3. `kalmanCorrect_acc.m`<br>
