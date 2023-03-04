@@ -115,7 +115,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	function acceleration_mode = computeAccMode(lambda, mu)
 	```
 	[Eq. pre-34 Suh]<br>
-	It computes Shu's acceleration mode; it is able to detect external acceleration.
+	Computes Shu's acceleration mode, which is capable of detecting external acceleration (i.e., acceleration caused by forces other than gravity).
 	* INPUT:
 		* `lambda` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The 3 eigenvalues of the matrix U, at times k, k-1, k-2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
 		* `mu` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Defined after \[Eq. 32 Suh\] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
@@ -129,7 +129,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	```matlab
 	function a_b = create_extAcc(a_b_OLD, t_i, ext_acc, length)
 	```
-	It generates constant external acceleration ext_acc from t_i to t_i + length, overwriting previous external acceleration a\_b\_OLD.
+	Generates constant external acceleration ext_acc from t_i to t_i + length, overwriting previous external acceleration a\_b\_OLD.
 	* INPUT:
 		* `a_b_OLD` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Previous external acceleration; it'll be overwritten &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x N_samples) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m / s^2]
 		* `t_i` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ext. acc. starting (initial) time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
@@ -144,7 +144,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	function Q_hat_a_b = estimateExtAccCov_Sab(y_a)
 	```
 	[Eq. 37 Suh]<br>
-	It implements the accelerometer norm-based adaptive algorithm by A. M. Sabatini for estimating external acceleration covariance matrix Q\_\_a\_b.
+	Implements the accelerometer norm-based adaptive algorithm by A. M. Sabatini for estimating external acceleration covariance matrix Q\_\_a\_b.
 	* INPUT:
 		* `y_a` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Measured acceleration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m/s^2]
 	* OUTPUT:
@@ -156,7 +156,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	function [Q_hat_a_b, lambda, mu] = estimateExtAccCov_Suh(r_a, lambda, mu, H_a, P__next_prev, R_a)
 	```
 	[Eq. 34 - 35 Suh]<br>
-	It implements the adaptive estimation algorithm by Y. S. Suh for estimating external acceleration covariance matrix Q\_\_a\_b.
+	Implements the adaptive estimation algorithm by Y. S. Suh for estimating external acceleration covariance matrix Q\_\_a\_b.
 	* INPUT:
 		* `r_a` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Residual in the accelerometer measurement update &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x M_1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m / s^2]
 		* `lambda` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Threshold between first and second condition &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
@@ -175,7 +175,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	function q = euler2quat(angles)
 	```
 	[[https://marc-b-reynolds.github.io/math/2017/04/18/TaitEuler.html#mjx-eqn%3Aeq%3Atait](https://marc-b-reynolds.github.io/math/2017/04/18/TaitEuler.html#mjx-eqn%3Aeq%3Atait), Eq. 2 - 3 - 4 - 5]<br>
-	It converts Euler angles to quaternion.
+	Converts Euler angles to quaternion.
 	* INPUT:
 		* `angles` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Euler angles (angles = [roll; pitch; yaw]) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
 	* OUTPUT:
@@ -186,7 +186,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	```matlab
 	function C = euler2RotMat(angles)
 	```
-	It converts Euler angles to rotation matrix (aka direction cosine matrix, DCM).
+	Converts Euler angles to rotation matrix (aka direction cosine matrix, DCM).
 	The Euler angles rotate the frame n (navigation) to the frame b (body) according to 'zyx' sequence.
 	* INPUT:
 		* `angles` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Euler angles (angles = [roll; pitch; yaw]) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
@@ -200,7 +200,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	```matlab
 	function a = euler_angle_range_three_axis(angles)
 	```
-	It limits Euler angles range.
+	Limits Euler angles range.
 	For three-axis rotation, the angle ranges are [-pi, pi], [-pi/2, pi/2] and [-pi, pi].
 	For two-axis rotation, the angle ranges are [-pi, pi], [0, pi] and [-pi, pi].
 	* INPUT:
@@ -214,7 +214,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	function values_interpolated = lin_interpolate(T, values, N_samples, N_samples__theoretical)
 	```
 	[Eq. pre-34 Suh]<br>
-	It linearly interpolates values.
+	Linearly interpolates values.
 	* INPUT:
 		* `T` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time stamp array &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1 x N_samples) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 	[s]
 		* `values` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Array with elements to be interpolated &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1 x N_samples) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 	[-]
@@ -229,7 +229,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	```matlab
 	function q = omega2quat(omega)
 	```
-	It creates a pure imaginary quaternion (i.e., null scalar part, that is, q(1) = 0) from the angular velocity omega.
+	Creates a pure imaginary quaternion (i.e., null scalar part, that is, q(1) = 0) from the angular velocity omega.
 	Please note: the quaternion thus obtained is NOT a unitary quaternion.
 	* INPUT:
 		* `omega` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
@@ -242,7 +242,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	function Omega_omega = Omega(omega)
 	```
 	[Eq. A12 ("A Kalman Filter for Nonlinear Attitude Estimation Using Time Variable Matrices and Quaternions" - Alvaro Deibe)]<br>
-	It computes the Omega(omega) matrix.<br>
+	Computes the Omega(omega) matrix.<br>
 	N.B.: Omega(omega) appears in the product of a vector and a quaternion, and is used for example in the quaternion derivative.<br>
 	(N.B.: [Eq. 64 Trawny] DOES NOT work properly anymore, probably since q(1) = q\_0 is the scalar part)
 	* INPUT:
@@ -256,7 +256,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	function Omega__avg_omega = Omega_avg_omega(omega_next, omega_prev, dt)
 	```
 	[Eq. 129 Trawny]<br>
-	It computes the Omega(omega_avg) matrix.
+	Computes the Omega(omega_avg) matrix.
 	* INPUT:
 		* `omega_next` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k+1) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
 		* `omega_prev` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
@@ -270,7 +270,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	function Omega__dot_omega = Omega_dot_omega(omega_next, omega_prev, dt)
 	```
 	[Eq. 126 Trawny]<br>
-	It defines the derivative of the turn rate (omega\_dot) and the associated matrix (Omega(omega_dot)), which - in the linear case - is constant.
+	Defines the derivative of the turn rate (omega\_dot) and the associated matrix (Omega(omega_dot)), which - in the linear case - is constant.
 	* INPUT:
 		* `omega_next` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k+1) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
 		* `omega_prev` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
@@ -284,7 +284,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	function Phi = Phi_matrix(y_g__next, Phi_mode)
 	```
 	[Eq. post-15 Suh] \('precise') OR [Eq. 16a Suh] \('approximated') OR [Eq. 187 Trawny] \('Trawny')<br>
-	It computes the transition matrix Phi(t + dt, t).
+	Computes the transition matrix Phi(t + dt, t).
 	* INPUT:
 		* `y_g__next` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Measured angular velocity (i.e., gyro output) y_g(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
 		* `dt` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time step (dt = t(k+1) - t(k))                          scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
@@ -301,7 +301,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	function Q_d = Q_d_matrix(y_g__next, Q_d_mode)
 	```
 	[Eq. post-15 Suh] \('precise') OR [Eq. 16b Suh] \('approximated') OR [Eq. 208 Trawny] \('Trawny')<br>
-	It computes the Noise Covariance Matrix Q\_d.
+	Computes the Noise Covariance Matrix Q\_d.
 	* INPUT:
 		* `y_g__next` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Measured angular velocity (i.e., gyro output) y_g(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
 		* `dt` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time step (dt = t(k+1) - t(k)) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
@@ -319,7 +319,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	function r = quat2euler(q)
 	```
 	[https://marc-b-reynolds.github.io/math/2017/04/18/TaitEuler.html#mjx-eqn%3Aeq%3Atait](https://marc-b-reynolds.github.io/math/2017/04/18/TaitEuler.html#mjx-eqn%3Aeq%3Atait])<br>
-	It converts quaternion to Euler angles.
+	Converts quaternion to Euler angles.
 	* INPUT:
 		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 	* OUTPUT:
@@ -331,7 +331,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	function C_from_q = quat2RotMat(q)
 	```
 	[Eq. 90 Trawny] [Eq. 1 Suh]<br>
-	It computes the rotation matrix associated to the quaternion q.
+	Computes the rotation matrix associated to the quaternion q.
 	* INPUT:
 		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 	* OUTPUT:
@@ -343,7 +343,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	function q_conjugate = quatConjugate(q)
 	```
 	[Eq. 13 Trawny]<br>
-	It takes the complex conjugate (that is, the inverse for a unit quaternion) of a given quaternion.<br>
+	Takes the complex conjugate (that is, the inverse for a unit quaternion) of a given quaternion.<br>
 	N.B.: The inverse rotation is described by the inverse or complex conjugate quaternion).
 	* INPUT:
 		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion q(k) (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
@@ -356,7 +356,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	function q_dot = quatDerivative(q, omega)
 	```
 	[Eq. 106 Trawny] OR \[Eq. 2 Suh] (and [Eq. 4 Suh])<br>
-	It Computes the quaternion derivative.
+	Computes the quaternion derivative.
 	* INPUT:
 		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 		* `omega` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
@@ -369,7 +369,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	function q_next = quatFirstIntegration(q_prev, omega_next, omega_prev, integration_mode)
 	```
 	[Eq. 18 Suh] \('Suh') OR [Eq. 131 Trawny] \('Trawny') OR [Eq. 8 Yuan] \('Yuan')<br>
-	It computes the first order quaternion integration.
+	Computes the first order quaternion integration.
 	It makes the assumption of a linear evolution of omega during the integration interval dt.<br>
 	N.B.: DO use 'Suh'; DO NOT use 'Trawny' !!!
 	* INPUT:
@@ -390,7 +390,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	function q_inverse = quatInverse(q)
 	```
 	[Eq. 13 Trawny]<br>
-	It takes the inverse of a given quaternion.<br>
+	Takes the inverse of a given quaternion.<br>
 	(N.B.: The inverse rotation is described by the inverse - or complex conjugate for unit quaternions quaternion)
 	* INPUT:
 		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion q(k) (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
@@ -403,7 +403,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	function q_times_p = quatMultiplication(q, p)
 	```
 	[https://en.wikipedia.org/wiki/Quaternion#Hamilton_product](https://en.wikipedia.org/wiki/Quaternion#Hamilton_product)<br>
-	It multiplies the quaternions q and p, thus obtaining their Hamilton product.
+	Multiplies the quaternions q and p, thus obtaining their Hamilton product.
 	Please note: the quaternion product is NOT commutative!<br>
 	(N.B.: [Eq. post-5 Trawny] is not used)	
 	* INPUT:
@@ -418,7 +418,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	function x = rand_range(xmin, xmax)
 	```
 	[https://it.mathworks.com/matlabcentral/answers/66763-generate-random-numbers-in-range-from-0-8-to-4](https://it.mathworks.com/matlabcentral/answers/66763-generate-random-numbers-in-range-from-0-8-to-4)<br>
-	It generates a value from the uniform distribution on the interval (xmin, xmax).
+	Generates a value from the uniform distribution on the interval (xmin, xmax).
 	* INPUT:
 		* `xmin` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Minimum possible value &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 		* `xmax` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maximum possible value &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
@@ -431,7 +431,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	function r = RotMat2euler(C)
 	```
 	[https://d3cw3dd2w32x2b.cloudfront.net/wp-content/uploads/2012/07/euler-angles1.pdf](https://d3cw3dd2w32x2b.cloudfront.net/wp-content/uploads/2012/07/euler-angles1.pdf)<br>
-	It converts direction cosine matrix to Euler angles ('zyx' sequence).<br>
+	Converts direction cosine matrix to Euler angles ('zyx' sequence).<br>
 	N.B.: "We’ll follow the notational conventions of Shoemake’s “Euler Angle Conversion”, Graphics Gems IV, pp. 222-9".
 	* INPUT:
 		* `C` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coordinate transformation matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
@@ -444,7 +444,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	function q = RotMat2quat(C)
 	```
 	[Eq. 98a - 98b - 99a - 99b Trawny]<br>
-	It converts direction cosine matrix to quaternion.
+	Converts direction cosine matrix to quaternion.
 	* INPUT:
 		* `C` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coordinate transformation matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 	* OUTPUT:
@@ -455,7 +455,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	```matlab
 	function C_x = rotX(alpha)
 	```
-	It computes a basic rotation about x-axis by an angle alpha.
+	Computes a basic rotation about x-axis by an angle alpha.
 	* INPUT:
 		* `alpha` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; angle &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
 	* OUTPUT:
@@ -466,7 +466,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	```matlab
 	function C_y = rotY(alpha)
 	```
-	It computes a basic rotation about y-axis by an angle alpha.
+	Computes a basic rotation about y-axis by an angle alpha.
 	* INPUT:
 		* `alpha` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; angle &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
 	* OUTPUT:
@@ -477,7 +477,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	```matlab
 	function C_y = rotY(alpha)
 	```
-	It computes a basic rotation about z-axis by an angle alpha.
+	Computes a basic rotation about z-axis by an angle alpha.
 	* INPUT:
 		* `alpha` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; angle &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
 	* OUTPUT:
@@ -489,7 +489,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	function skew_symmetric_matrix = skewSymmetric(p)
 	```
 	[Eq. post-9 Suh]<br>
-It computes the skew-symmetric matrix operator [qx], formed from p.
+	Computes the skew-symmetric matrix operator [qx], formed from p.
 	* INPUT:
 		* `p` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Possible values:
 			* angular velocity, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
@@ -498,24 +498,24 @@ It computes the skew-symmetric matrix operator [qx], formed from p.
 		* `skew_symmetric_matrix` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Skew-symmetric matrix formed from p &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
 
-29. `wrapTo90.m`<br>
+29. `wrapTo90.m`
 	```matlab
 	function alpha_wrapped = wrapTo90(alpha)
 	```
 	[https://it.mathworks.com/matlabcentral/answers/324032-how-to-wrap-angle-in-radians-to-pi-2-pi-2](https://it.mathworks.com/matlabcentral/answers/324032-how-to-wrap-angle-in-radians-to-pi-2-pi-2)<br>
-	It wraps the given angle to [-90, +90].
+	Wraps the given angle to [-90, +90].
 	* INPUT:
 		* `alpha` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angle &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [deg]
 	* OUTPUT:
 		* `alpha_wrapped` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Wrapped angle &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [deg]
 
 
-30. `wrapToPi2.m`<br>
+30. `wrapToPi2.m`
 	```matlab
 	function alpha_wrapped = wrapToPi2(alpha)
 	```
 	[https://it.mathworks.com/matlabcentral/answers/324032-how-to-wrap-angle-in-radians-to-pi-2-pi-2](https://it.mathworks.com/matlabcentral/answers/324032-how-to-wrap-angle-in-radians-to-pi-2-pi-2)<br>
-	It wraps the given angle to [-pi/2, +pi/2].
+	Wraps the given angle to [-pi/2, +pi/2].
 	* INPUT:
 		* `alpha` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angle &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
 	* OUTPUT:
