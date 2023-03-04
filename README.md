@@ -48,40 +48,40 @@ e.g., q\_next\_prev denotes q(k|k-1) (or q(k+1|k), respectively)
 
 1. `generate_synthetic_data.m`<br>
 This script generates synthetic data.<br>
-Please select one of the following rate_mode:
-	* 'null': null rate
-	* 'const': constant rate
-	* 'roll': zero(0-50 s) - phi=phi+90° - zero (150-200 s)
-	* 'pitch': zero(0-50 s) - theta=theta+45° - zero (150-200 s)
-	* 'yaw': zero(0-50 s) - psi=psi+90° - zero (150-200 s)
-	* 'mult\_const': miscellaneous (multiple) constant rates
-	* 'mult\_ramp': miscellaneous (multiple), fast, ramp-like rates
-<br>For each rate_mode, choose either 'ON' or 'OFF' (case insensitive, by the way):
-	* noise_gyro: If 'ON', it adds noise to gyroscope measurements
-	* noise_acc: If 'ON', it adds noise to accelerometer measurements
-	* noise_mag: If 'ON', it adds noise to magnetometer measurements
-	* bias_gyro: If 'ON', it adds bias to gyroscope measurements
-	* bias_acc: If 'ON', it adds bias to accelerometer measurements
-	* ext_acc: If 'ON', it creates 3 external accelerations:
-		* [10; 5; 20] from 80 to 81 s
-		* [0; -7; 0] from 120 to 122 s
-		* [-4; -3; 8] from 140 to 140.5 s
+	* Please select one of the following rate_mode:
+		* 'null': null rate
+		* 'const': constant rate
+		* 'roll': zero(0-50 s) - phi=phi+90° - zero (150-200 s)
+		* 'pitch': zero(0-50 s) - theta=theta+45° - zero (150-200 s)
+		* 'yaw': zero(0-50 s) - psi=psi+90° - zero (150-200 s)
+		* 'mult\_const': miscellaneous (multiple) constant rates
+		* 'mult\_ramp': miscellaneous (multiple), fast, ramp-like rates
+	* Choose either 'ON' or 'OFF' (case insensitive, by the way):
+		* noise_gyro: If 'ON', it adds noise to gyroscope measurements
+		* noise_acc: If 'ON', it adds noise to accelerometer measurements
+		* noise_mag: If 'ON', it adds noise to magnetometer measurements
+		* bias_gyro: If 'ON', it adds bias to gyroscope measurements
+		* bias_acc: If 'ON', it adds bias to accelerometer measurements
+		* ext_acc: If 'ON', it creates 3 external accelerations:
+			* [10; 5; 20] from 80 to 81 s
+			* [0; -7; 0] from 120 to 122 s
+			* [-4; -3; 8] from 140 to 140.5 s
 
 2. `import_real_data.m`<br>
 This script loads real data from the __data__ folder (which one in particular is chosen after in the code).<br>
-Please select one of the following interpolation modes:
-	* '1': interpolates samples (using Matlab function 'interp1(nearest)')
-	* '2': linearly interpolates samples (using 'lin_interpolate', located in the 'functions' directory); it is a time-consuming task
-	* '3': loads previously interpolated data
-otherwise do nothing
-Please Note: paths should be adjusted according to your real data folder location.
+	* Please select one of the following interpolation modes:
+		* '1': interpolates samples (using Matlab function 'interp1(nearest)')
+		* '2': linearly interpolates samples (using 'lin_interpolate', located in the 'functions' directory); it is a time-consuming task
+		* '3': loads previously interpolated data
+	otherwise do nothing
+	Please note: paths should be adjusted according to your real data folder location.
 
 3. `kalmanCorrect_acc.m`<br>
 This script adjusts the projected estimate by an actual accelerometer measurement at that time.<br>
-Please select one of the following Q\_hat\_a\_b\_\_algorithm:
-	* 'suh': uses Suh's algorithm [[1]](#references-1)
-	* 'sabatini': uses Sabatini's algorithm [[2]](#references-2)
-	* 'zeros': uses a (3 x 3) zeros matrix
+	* Please select one of the following Q\_hat\_a\_b\_\_algorithm:
+		* 'suh': uses Suh's algorithm [[1]](#references-1)
+		* 'sabatini': uses Sabatini's algorithm [[2]](#references-2)
+		* 'zeros': uses a (3 x 3) zeros matrix
 
 4. `kalmanCorrect_mag.m`<br>
 This script adjusts the projected estimate by an actual magnetometer measurement at that time.
@@ -91,10 +91,9 @@ This script projects the current state estimate ahead in time by two actual gyro
 
 6. `main.m`<br>
 This is the main script that should be executed on Matlab.<br>
-Please select one of the following sensor_data types:
-
-	* 'synthetic': Computer-generated sequence of angular velocity, acceleration, and magnetic field. See `generate_synthetic_data.m` for further details.
-	* 'real': Load sequence of angular velocity, acceleration, magnetic field, and attitude measured by real sensors (gyroscope, accelerometer, magnetometer, and inclinometer, respectively). See `import_real_data.m` for further details.
+	* Please select one of the following sensor_data types:
+		* 'synthetic': Computer-generated sequence of angular velocity, acceleration, and magnetic field. See `generate_synthetic_data.m` for further details.
+		* 'real': Load sequence of angular velocity, acceleration, magnetic field, and attitude measured by real sensors (gyroscope, accelerometer, magnetometer, and inclinometer, respectively). See `import_real_data.m` for further details.
 
 7. `plot_results.m`<br>
 This script generates and (potentially) saves all the figures in the .png extension.<br>
