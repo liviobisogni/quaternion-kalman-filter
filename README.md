@@ -74,7 +74,7 @@ This script loads real data from the __data__ folder (which one in particular is
 		* '2': linearly interpolates samples (using 'lin_interpolate', located in the 'functions' directory); it is a time-consuming task
 		* '3': loads previously interpolated data
 	otherwise do nothing
-<br>Please note: paths should be adjusted according to your real data folder location.
+Please note: paths should be adjusted according to your real data folder location.
 
 3. `kalmanCorrect_acc.m`<br>
 This script adjusts the projected estimate by an actual accelerometer measurement at that time.<br>
@@ -228,7 +228,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	```matlab
 	function q = omega2quat(omega)
 	```
-	Creates a pure imaginary quaternion (i.e., null scalar part, that is, q(1) = 0) from the angular velocity omega.
+	Creates a pure imaginary quaternion (i.e., null scalar part, that is, q(1) = 0) from the angular velocity omega.<br>
 	Please note: the quaternion thus obtained is NOT a unitary quaternion.
 	* INPUT:
 		* `omega` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
@@ -402,7 +402,7 @@ The __functions__ folder includes a set of low-level MATLAB functions used by th
 	function q_times_p = quatMultiplication(q, p)
 	```
 	[https://en.wikipedia.org/wiki/Quaternion#Hamilton_product](https://en.wikipedia.org/wiki/Quaternion#Hamilton_product)<br>
-	Multiplies the quaternions q and p, thus obtaining their Hamilton product.
+	Multiplies the quaternions q and p, thus obtaining their Hamilton product.<br>
 	Please note: the quaternion product is NOT commutative!<br>
 	(N.B.: [Eq. post-5 Trawny] is not used)	
 	* INPUT:
