@@ -68,13 +68,13 @@ This script generates synthetic data.<br>
 			* [-4; -3; 8] from 140 to 140.5 s
 
 2. `import_real_data.m`<br>
-This script loads real data from the __data__ folder (which one in particular is chosen after in the code).
+This script loads real data from the __data__ folder (which one in particular is chosen after in the code).<br>
 	* Please select one of the following interpolation modes:
 		* '1': interpolates samples (using Matlab function 'interp1(nearest)')
 		* '2': linearly interpolates samples (using 'lin_interpolate', located in the 'functions' directory); it is a time-consuming task
 		* '3': loads previously interpolated data
 	otherwise do nothing
-Please note: paths should be adjusted according to your real data folder location.
+<br>Please note: paths should be adjusted according to your real data folder location.
 
 3. `kalmanCorrect_acc.m`<br>
 This script adjusts the projected estimate by an actual accelerometer measurement at that time.<br>
