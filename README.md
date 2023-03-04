@@ -102,7 +102,7 @@ The following options can be set:
 
 	* saving\_flag: if '1', images (i.e., plots) are saved (as .png files); otherwise, they aren't saved.
 	* title\_flag: if '1', titles are added to images; otherwise, they aren't added.
-plot_detected_ext_acc: if '1', plot external acceleration detection instant dots in the acceleration plot.
+	* plot\_detected\_ext\_acc: if '1', plot external acceleration detection instant dots in the acceleration plot.
 	* images\_path: (e.g., _'/Users/a\_user\_name/Documents/MATLAB/attitude-estimation-quaternion-kalman-filter/images'_) is the folder where images will be saved. Change it if needed.
 	* main\_path: (e.g., _'/Users/a\_user\_name/Documents/MATLAB/attitude-estimation-quaternion-kalman-filter'_) is the folder containing the source code. Change it if needed.
 
