@@ -3,18 +3,36 @@
 This project aimed to estimate the attitude of a vehicle using measurements from onboard sensors. The sensors used were inertial sensors (gyroscope and accelerometer) and a magnetometer. The project utilized quaternion algebra and an indirect Kalman filter to estimate the vehicle's orientation. To estimate external acceleration, two methods were employed: norm-based estimation [[1]](#references-1) and adaptive estimation [[2]](#references-2). The filter was tested using simulated and real data to validate its effectiveness.
 
 
+<p align="center">
+	<a href="#prerequisite">Prerequisite</a>
+	<span> • </span>
+	<a href="use">Use</a>
+	<span> • </span>
+	<a href="scripts">Scripts</a>
+	<span> • </span>
+	<a href="functions">Functions Library</a>
+	<span> • </span>
+	<a href="doc/presentation.pdf">Presentation</a>
+	<span> • </span>
+	<a href="#sample-images">Sample Images</a>
+</p>
+
+
 ## References
-1. <a id="references-1"></a>Y. S. Suh, "Orientation Estimation Using a Quaternion-Based Indirect Kalman Filter With Adaptive Estimation of External Acceleration," in IEEE Transactions on Instrumentation and Measurement, vol. 59, no. 12, pp. 3296-3305, Dec. 2010, doi:[10.1109/TIM.2010.2047157](https://doi.org/10.1109/TIM.2010.2047157).
-2. <a id="references-2"></a>Nez, A.; Fradet, L.; Marin, F.; Monnet, T.; Lacouture, P. "Identification of Noise Covariance Matrices to Improve Orientation Estimation by Kalman Filter." Sensors 2018, 18, 3490. doi:[10.3390/s18103490](https://doi.org/10.3390/s18103490)
-3. Trawny, N.; Roumeliotis, S.I., "Indirect Kalman filter for 3D attitude estimation." In Technical Report; Department of Computer Science and Engineering, University of Minnesota: Minneapolis, MN, USA, 2005. [Google Scholar](https://scholar.google.com/scholar?&q=Trawny%2C%20N.%2C%20Roumeliotis%2C%20S.I.%3A%20Indirect%20Kalman%20filter%20for%203D%20attitude%20estimation.%20Technical%20Report%202005-002%2C%20University%20of%20Minnesota%2C%20Dept.%20of%20Comp.%20Sci.%20%26%20Eng.%2C%20MARS%20Lab.%20%28March%202005%29)
-4. Sabatini, A. M. Quaternion-based extended Kalman filter for determining orientation by inertial and magnetic sensing. IEEE Trans. Biomed. Eng., vol. 53, no. 7, 1346–1356, Jul. 2006, doi:[10.1109/TBME.2006.875664](https://doi.org/10.1109/TBME.2006.875664)
-5. Schneider, R; Georgakis, C. How To NOT Make the Extended Kalman Filter Fail. Industrial & Engineering Chemistry Research 2013 52 (9), 3354-3362. doi:[10.1021/ie300415d](https://doi.org/10.1021/ie300415d)
+1. <a id="references-1"></a>Y. S. Suh, "Orientation Estimation Using a Quaternion-Based Indirect Kalman Filter With Adaptive Estimation of External Acceleration," in IEEE Transactions on Instrumentation and Measurement, vol. 59, no. 12, pp. 3296-3305, Dec. 2010, doi:[10.1109/TIM.2010.2047157](https://doi.org/10.1109/TIM.2010.2047157)
+2. <a id="references-2"></a>A. Nez, L. Fradet, F. Marin, T. Monnet and P. Lacouture, "Identification of Noise Covariance Matrices to Improve Orientation Estimation by Kalman Filter." Sensors 2018, 18, 3490, doi:[10.3390/s18103490](https://doi.org/10.3390/s18103490)
+3. N. Trawny and S.I. Roumeliotis, "Indirect Kalman filter for 3D attitude estimation." In Technical Report; Department of Computer Science and Engineering, University of Minnesota: Minneapolis, MN, USA, 2005, [Google Scholar](https://scholar.google.com/scholar?&q=Trawny%2C%20N.%2C%20Roumeliotis%2C%20S.I.%3A%20Indirect%20Kalman%20filter%20for%203D%20attitude%20estimation.%20Technical%20Report%202005-002%2C%20University%20of%20Minnesota%2C%20Dept.%20of%20Comp.%20Sci.%20%26%20Eng.%2C%20MARS%20Lab.%20%28March%202005%29)
+4. A. M. Sabatini, "Quaternion-based extended Kalman filter for determining orientation by inertial and magnetic sensing," in IEEE Transactions on Biomedical Engineering, vol. 53, no. 7, pp. 1346-1356, July 2006, doi:[10.1109/TBME.2006.875664](https://doi.org/10.1109/TBME.2006.875664)
+5. R. Schneider and C. Georgakis, "How To NOT Make the Extended Kalman Filter Fail". Industrial & Engineering Chemistry Research 2013 52 (9), 3354-3362, doi:[10.1021/ie300415d](https://doi.org/10.1021/ie300415d)
 
 
-## How to Use
-1. Add this repository to your MATLAB path
-2. Add your data in the __data__ folder
-3. If desired, edit the scripts in the __scripts__ folder according to your needs
+## <a id="use"></a>How to Use
+1. Add this repository to your MATLAB path (replace /path/to/this/repository with the actual path to the directory where the repository is located on your computer):
+	```matlab
+	addpath('/path/to/this/repository')
+	```
+2. Add your flight data to the __data__ folder
+3. If desired, edit the scripts in the __scripts__ folder according to your needs as detailed [here](#scripts)
 4. Run the `main.m` script
 5. If the 'saving_flag' is turned on in the `plot_results.m` script, figures will be saved as .png files in the __img__ folder
 
@@ -28,15 +46,18 @@ This repository contains four folders:
 * __scripts__: Contains MATLAB scripts that use the functions in the 'functions' folder.
 
 
-### Data
-The __data__ folder includes real data from sensors and the magnetic field parameters generated according to the most recent (2019-2024) World Magnetic Model (WMM) [https://www.ngdc.noaa.gov/geomag/calculators/magcalc.shtml](https://www.ngdc.noaa.gov/geomag/calculators/magcalc.shtml). The parameters were generated for the appropriate date (February 13th, 2020) and location (43°52'52"N, 10°14'6"E, Viareggio, IT) where the real data was acquired.
+## Data
+The __data__ folder should contain flight data collected from real sensors (gyroscope, accelerometer, magnetometer, and inclinometer), as well as magnetic field parameters. The magnetic field parameters can be generated using the most recent World Magnetic Model (WMM) from 2019-2024, which can be accessed through the following link: [https://www.ngdc.noaa.gov/geomag/calculators/magcalc.shtml](https://www.ngdc.noaa.gov/geomag/calculators/magcalc.shtml).
+
+The images presented in the [presentation](doc/presentation.pdf) were generated using magnetic field parameters calculated for a specific date (February 13th, 2020) and location (43°52'52"N, 10°14'6"E, Viareggio, IT) where real data was collected.
 
 
-### Images
+
+## Images
 The __img__ folder contains the images (.png) generated and saved by the `plot_results.m` script.
 
 
-### Scripts
+## <a id="scripts"></a>Scripts
 The __scripts__ folder contains all the scripts used. Possible editing, such as switching between synthetic and real data, should be done by modifying the code itself. All scripts have extensive comments in the code.
 
 Notation used:
@@ -68,14 +89,14 @@ This script generates synthetic data.<br>
 			* [-4; -3; 8] from 140 to 140.5 s
 
 2. `import_real_data.m`<br>
-This script loads real data from the __data__ folder (which one in particular is chosen after in the code).<br>
+This script loads real data from the __data__ folder (the specific folder to be used is determined within the code.).<br>
 	* Please select one of the following interpolation modes:
 		* '1': interpolates samples (using Matlab function 'interp1(nearest)')
 		* '2': linearly interpolates samples (using 'lin_interpolate', located in the 'functions' directory); it is a time-consuming task
 		* '3': loads previously interpolated data
 	otherwise do nothing
 	
-	Please note: paths should be adjusted according to your real data folder location.
+	Make sure to adjust the paths according to your real data folder location.
 
 3. `kalmanCorrect_acc.m`<br>
 This script adjusts the projected estimate by an actual accelerometer measurement at that time.<br>
@@ -100,15 +121,15 @@ This is the main script that should be executed on Matlab.<br>
 This script generates and (potentially) saves all the figures in the .png extension.<br>
 The following options can be set:
 
-	* saving\_flag: if '1', images (i.e., plots) are saved (as .png files); otherwise, they aren't saved.
-	* title\_flag: if '1', titles are added to images; otherwise, they aren't added.
-	* plot\_detected\_ext\_acc: if '1', plot external acceleration detection instant dots in the acceleration plot.
-	* images\_path: (e.g., _'/Users/a\_user\_name/Documents/MATLAB/attitude-estimation-quaternion-kalman-filter/images'_) is the folder where images will be saved. Change it if needed.
-	* main\_path: (e.g., _'/Users/a\_user\_name/Documents/MATLAB/attitude-estimation-quaternion-kalman-filter'_) is the folder containing the source code. Change it if needed.
+	* saving\_flag: set this to '1' to save the generated plots as .png files, and set it to any other value to disable saving.
+	* title\_flag: set this to '1' to enable adding titles to the generated plots, and set to any other value to disable adding titles.
+	* plot\_detected\_ext\_acc: set this to '1' to display detected external acceleration instant dots on the acceleration plot, and set to any other value to disable displaying detected external acceleration instant dots.
+	* images\_path: set this variable to the folder path where you want to save the generated images (e.g., _'/Users/a\_user\_name/Documents/MATLAB/quaternion-kalman-filter/images'_). Modify the path as needed.
+	* main\_path: set this variable to the folder path where the source code is located (e.g., _'/Users/a_user\_name/Documents/MATLAB/quaternion-kalman-filter'_). Modify the path as needed.
 
 
-### Functions
-The __functions__ folder includes a set of low-level MATLAB functions used by the scripts in the 'scripts' folder. A list of the functions contained in the folder and their descriptions can be found below.
+## <a id="functions"></a>Functions
+The __functions__ folder includes a set of MATLAB functions library used by the scripts in the 'scripts' folder. A list of the functions contained in the folder and their descriptions can be found below.
 
 1. `computeAccMode.m`
 	```matlab

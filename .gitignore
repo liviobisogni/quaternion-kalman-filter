@@ -1,0 +1,7 @@
+# .gitignore file to exclude .DS_Store files
+
+# Ignore .DS_StoreDS_Store files in the root directory and all subdirectories
+**/.DS_Store
+
+# Ignore .DS_Store files in the .git directory
+.git/.DS_Store
