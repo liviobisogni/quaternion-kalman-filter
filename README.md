@@ -62,76 +62,76 @@ The __scripts__ folder contains all the scripts used. Possible editing, such as 
 
 Notation used:
 
-	* prev = k-1 (or k, respectively)
-	* next = k (or k+1, respectively)
-e.g., q\_next\_prev denotes q(k|k-1) (or q(k+1|k), respectively)
+* `prev = k - 1` (or `k`, respectively)
+* `next = k` (or `k + 1`, respectively)
+
+e.g., `q_next_prev` denotes q(k|k-1) (or q(k+1|k), respectively)
 
 
-1. `generate_synthetic_data.m`<br>
+1. __`generate_synthetic_data.m`__<br>
 This script generates synthetic data.<br>
 	* Please select one of the following rate_mode:
-		* 'null': null rate
-		* 'const': constant rate
-		* 'roll': zero(0-50 s) - phi=phi+90° - zero (150-200 s)
-		* 'pitch': zero(0-50 s) - theta=theta+45° - zero (150-200 s)
-		* 'yaw': zero(0-50 s) - psi=psi+90° - zero (150-200 s)
-		* 'mult\_const': miscellaneous (multiple) constant rates
-		* 'mult\_ramp': miscellaneous (multiple), fast, ramp-like rates
-	* Choose either 'ON' or 'OFF' (case insensitive, by the way):
-		* noise_gyro: If 'ON', it adds noise to gyroscope measurements
-		* noise_acc: If 'ON', it adds noise to accelerometer measurements
-		* noise_mag: If 'ON', it adds noise to magnetometer measurements
-		* bias_gyro: If 'ON', it adds bias to gyroscope measurements
-		* bias_acc: If 'ON', it adds bias to accelerometer measurements
-		* ext_acc: If 'ON', it creates 3 external accelerations:
+		* `null`: null rate
+		* `const`: constant rate
+		* `roll`: zero(0-50 s) - phi=phi+90° - zero (150-200 s)
+		* `pitch`: zero(0-50 s) - theta=theta+45° - zero (150-200 s)
+		* `yaw`: zero(0-50 s) - psi=psi+90° - zero (150-200 s)
+		* `mult_const`: miscellaneous (multiple) constant rates
+		* `mult_ramp`: miscellaneous (multiple), fast, ramp-like rates
+	* Choose either `ON` or `OFF` (case insensitive, by the way):
+		* noise_gyro: If `ON`, it adds noise to gyroscope measurements
+		* noise_acc: If `ON`, it adds noise to accelerometer measurements
+		* noise_mag: If `ON`, it adds noise to magnetometer measurements
+		* bias_gyro: If `ON`, it adds bias to gyroscope measurements
+		* bias_acc: If `ON`, it adds bias to accelerometer measurements
+		* ext_acc: If `ON`, it creates 3 external accelerations:
 			* [10; 5; 20] from 80 to 81 s
 			* [0; -7; 0] from 120 to 122 s
 			* [-4; -3; 8] from 140 to 140.5 s
 
-2. `import_real_data.m`<br>
+2. __`import_real_data.m`__<br>
 This script loads real data from the __data__ folder (the specific folder to be used is determined within the code.).<br>
 	* Please select one of the following interpolation modes:
-		* '1': interpolates samples (using Matlab function 'interp1(nearest)')
-		* '2': linearly interpolates samples (using 'lin_interpolate', located in the 'functions' directory); it is a time-consuming task
-		* '3': loads previously interpolated data
+		* `1`: interpolates samples (using Matlab function `interp1(nearest)`)
+		* `2`: linearly interpolates samples (using `lin_interpolate`, located in the __functions__ folder); it is a time-consuming task
+		* `3`: loads previously interpolated data
 	otherwise do nothing
 	
-	Make sure to adjust the paths according to your real data folder location.
+	Make sure to adjust the paths according to your real __data__ folder location.
 
-3. `kalmanCorrect_acc.m`<br>
+3. __`kalmanCorrect_acc.m`__<br>
 This script adjusts the projected estimate by an actual accelerometer measurement at that time.<br>
-	* Please select one of the following Q\_hat\_a\_b\_\_algorithm:
-		* 'suh': uses Suh's algorithm [[1]](#references-1)
-		* 'sabatini': uses Sabatini's algorithm [[2]](#references-2)
-		* 'zeros': uses a (3 x 3) zeros matrix
+	* Please select one of the following `Q_hat_a_b__algorithm`:
+		* `suh`: uses Suh's algorithm [[1]](#references-1)
+		* `sabatini`: uses Sabatini's algorithm [[2]](#references-2)
+		* `zeros`: uses a (3 x 3) zeros matrix
 
-4. `kalmanCorrect_mag.m`<br>
+4. __`kalmanCorrect_mag.m`__<br>
 This script adjusts the projected estimate by an actual magnetometer measurement at that time.
 
-5. `kalmanPredict.m`<br>
+5. __`kalmanPredict.m`__<br>
 This script projects the current state estimate ahead in time by two actual gyroscope measurements: at that time and the previous one.
 
-6. `main.m`<br>
+6. __`main.m`__<br>
 This is the main script that should be executed on Matlab.<br>
 	* Please select one of the following sensor_data types:
-		* 'synthetic': Computer-generated sequence of angular velocity, acceleration, and magnetic field. See `generate_synthetic_data.m` for further details.
-		* 'real': Load sequence of angular velocity, acceleration, magnetic field, and attitude measured by real sensors (gyroscope, accelerometer, magnetometer, and inclinometer, respectively). See `import_real_data.m` for further details.
+		* `synthetic`: Computer-generated sequence of angular velocity, acceleration, and magnetic field. See `generate_synthetic_data.m` for further details.
+		* `real`: Load sequence of angular velocity, acceleration, magnetic field, and attitude measured by real sensors (gyroscope, accelerometer, magnetometer, and inclinometer, respectively). See `import_real_data.m` for further details.
 
-7. `plot_results.m`<br>
-This script generates and (potentially) saves all the figures in the .png extension.<br>
-The following options can be set:
+7. __`plot_results.m`__<br>
+This script has the capability to generate and, if desired, save all figures in the .png format. Users can customize the settings by selecting from the following options:
 
-	* saving\_flag: set this to '1' to save the generated plots as .png files, and set it to any other value to disable saving.
-	* title\_flag: set this to '1' to enable adding titles to the generated plots, and set to any other value to disable adding titles.
-	* plot\_detected\_ext\_acc: set this to '1' to display detected external acceleration instant dots on the acceleration plot, and set to any other value to disable displaying detected external acceleration instant dots.
-	* images\_path: set this variable to the folder path where you want to save the generated images (e.g., _'/Users/a\_user\_name/Documents/MATLAB/quaternion-kalman-filter/images'_). Modify the path as needed.
-	* main\_path: set this variable to the folder path where the source code is located (e.g., _'/Users/a_user\_name/Documents/MATLAB/quaternion-kalman-filter'_). Modify the path as needed.
+	* `saving_flag`: set this to `1` to save the generated plots as .png files, and set it to any other value to disable saving.
+	* `title_flag`: set this to `1` to enable adding titles to the generated plots, and set it to any other value to disable adding titles.
+	* `plot_detected_ext_acc`: set this to `1` to display detected external acceleration instant dots on the acceleration plot, and set it to any other value to disable displaying detected external acceleration instant dots.
+	* `images_path`: set this variable to the folder path where you want to save the generated images (e.g., _'/Users/a\_user\_name/Documents/MATLAB/quaternion-kalman-filter/images'_). Modify the path as needed.
+	* `main_path`: set this variable to the folder path where the source code is located (e.g., _'/Users/a\_user\_name/Documents/MATLAB/quaternion-kalman-filter'_). Modify the path as needed.
 
 
 ## <a id="functions"></a>Functions
-The __functions__ folder includes a set of MATLAB functions library used by the scripts in the 'scripts' folder. A list of the functions contained in the folder and their descriptions can be found below.
+The __functions__ folder includes a set of MATLAB functions library used by the scripts in the __scripts__ folder. A list of the functions contained in the folder and their descriptions can be found below.
 
-1. `computeAccMode.m`
+1. __computeAccMode__
 	```matlab
 	function acceleration_mode = computeAccMode(lambda, mu)
 	```
@@ -141,16 +141,16 @@ The __functions__ folder includes a set of MATLAB functions library used by the 
 		* `lambda` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The 3 eigenvalues of the matrix U, at times k, k-1, k-2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
 		* `mu` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Defined after \[Eq. 32 Suh\] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
 	* OUTPUT:
-		* `acceleration_mode`,    Possible values:
-			* '1' (i.e., 'Mode 1' aka 'No external acceleration Mode')
-			* '2' (i.e., 'Mode 2' aka 'External acceleration Mode')
+		* `acceleration_mode`  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    Possible values:
+			* '1' (i.e., `Mode 1` meaning 'No external acceleration Mode')
+			* '2' (i.e., `Mode 2` meaning 'External acceleration Mode')
 
 
-2. `create_extAcc.m`
+2. __create_extAcc__
 	```matlab
 	function a_b = create_extAcc(a_b_OLD, t_i, ext_acc, length)
 	```
-	Generates constant external acceleration ext_acc from t_i to t_i + length, overwriting previous external acceleration a\_b\_OLD.
+	Generates constant external acceleration ext_acc from `t_i` to `t_i + length`, overwriting previous external acceleration `a_b_OLD`.
 	* INPUT:
 		* `a_b_OLD` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Previous external acceleration; it'll be overwritten &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x N_samples) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m / s^2]
 		* `t_i` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ext. acc. starting (initial) time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
@@ -160,24 +160,24 @@ The __functions__ folder includes a set of MATLAB functions library used by the 
 		* `a_b` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; External acceleration a\_b(t) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x N_samples) vector  [m / s^2]
 
 
-3. `estimateExtAccCov_Sab.m`
+3. __estimateExtAccCov_Sab__
 	```matlab
 	function Q_hat_a_b = estimateExtAccCov_Sab(y_a)
 	```
 	[Eq. 37 Suh]<br>
-	Implements the accelerometer norm-based adaptive algorithm by A. M. Sabatini for estimating external acceleration covariance matrix Q\_\_a\_b.
+	Implements the accelerometer norm-based adaptive algorithm by A. M. Sabatini [[1]](#references-1) for estimating external acceleration covariance matrix `Q__a_b`.
 	* INPUT:
 		* `y_a` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Measured acceleration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m/s^2]
 	* OUTPUT:
 		* `Q_hat_a_b` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Estimated external acceleration covariance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
 
-4. `estimateExtAccCov_Suh.m`
+4. __estimateExtAccCov_Suh__
 	```matlab
 	function [Q_hat_a_b, lambda, mu] = estimateExtAccCov_Suh(r_a, lambda, mu, H_a, P__next_prev, R_a)
 	```
 	[Eq. 34 - 35 Suh]<br>
-	Implements the adaptive estimation algorithm by Y. S. Suh for estimating external acceleration covariance matrix Q\_\_a\_b.
+	Implements the adaptive estimation algorithm by Y. S. Suh [[2]](#references-2) for estimating external acceleration covariance matrix `Q__a_b`.
 	* INPUT:
 		* `r_a` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Residual in the accelerometer measurement update &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x M_1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [m / s^2]
 		* `lambda` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Threshold between first and second condition &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
@@ -191,7 +191,7 @@ The __functions__ folder includes a set of MATLAB functions library used by the 
 		* `mu` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (newly computed) mu &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x (M_2+1)) matrix
 
 
-5. `euler2quat.m`
+5. __euler2quat__
 	```matlab
 	function q = euler2quat(angles)
 	```
@@ -200,24 +200,24 @@ The __functions__ folder includes a set of MATLAB functions library used by the 
 	* INPUT:
 		* `angles` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Euler angles (angles = [roll; pitch; yaw]) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
 	* OUTPUT:
-		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (`q` = [q0; q1; q2; q3], where the first element, q0, is the scalar part aka real part) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
 
-6. `euler2RotMat.m`
+6. __euler2RotMat__
 	```matlab
 	function C = euler2RotMat(angles)
 	```
-	Converts Euler angles to rotation matrix (aka direction cosine matrix, DCM).
-	The Euler angles rotate the frame n (navigation) to the frame b (body) according to 'zyx' sequence.
+	Converts Euler angles to rotation matrix (aka Direction Cosine Matrix, DCM).
+	The Euler angles rotate the frame `n` (navigation) to the frame `b` (body) according to the 'zyx' sequence.
 	* INPUT:
 		* `angles` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Euler angles (angles = [roll; pitch; yaw]) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
 	* OUTPUT:
 		* `C` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coordinate transformation matrix from n to b            (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
-			    N.B.: That is v\_b  = C * v\_n.
-                            ('\_b' or '\_n' are the frames in which the vector 'v' can be expressed, representing the body and navigation frames, respectively.)
+			    N.B.: That is, `v_b  = C * v_n`.
+                            (`_b` or `_n` are the frames in which the vector `v` can be expressed, representing the body and navigation frames, respectively.)
 
 
-7. `euler_angle_range_three_axis.m`
+7. __euler_angle_range_three_axis__
 	```matlab
 	function a = euler_angle_range_three_axis(angles)
 	```
@@ -230,49 +230,49 @@ The __functions__ folder includes a set of MATLAB functions library used by the 
 		* `a` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Limited Euler angles &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
 
 
-8. `lin_interpolate.m`
+8. __lin_interpolate__
 	```matlab
 	function values_interpolated = lin_interpolate(T, values, N_samples, N_samples__theoretical)
 	```
 	[Eq. pre-34 Suh]<br>
 	Linearly interpolates values.
 	* INPUT:
-		* `T` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time stamp array &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1 x N_samples) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 	[s]
-		* `values` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Array with elements to be interpolated &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1 x N_samples) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 	[-]
+		* `T` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time stamp array &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1 x `N_samples`) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 	[s]
+		* `values` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Array with elements to be interpolated &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1 x `N_samples`) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 	[-]
 		* `N_samples` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Number of samples of T and values &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 		* `N_samples__theoretical` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Theoretical number of samples &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 	* OUTPUT:
-		* `values_interpolated` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; N\_samples\_\_theoretical interpolated values &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1 x N\_samples\_\_theoretical) array &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]<br>
-		N.B.: N\_samples <= N\_samples\_\_theoretical
+		* `values_interpolated` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `N_samples__theoretical` interpolated values &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1 x `N_samples__theoretical`) array &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]<br>
+		N.B.: `N_samples <= N_samples__theoretical`
 
 
-9. `omega2quat.m`
+9. __omega2quat__
 	```matlab
 	function q = omega2quat(omega)
 	```
-	Creates a pure imaginary quaternion (i.e., null scalar part, that is, q(1) = 0) from the angular velocity omega.<br>
+	Creates a pure imaginary quaternion (i.e., null scalar part, that is, `q(1) = 0`) from the angular velocity omega.<br>
 	Please note: the quaternion thus obtained is NOT a unitary quaternion.
 	* INPUT:
 		* `omega` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
 	* OUTPUT:
-		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (`q` = [q0; q1; q2; q3], where the first element, q0, is the scalar part aka real part) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
 
-10. `Omega.m`
+10. __Omega__
 	```matlab
 	function Omega_omega = Omega(omega)
 	```
 	[Eq. A12 ("A Kalman Filter for Nonlinear Attitude Estimation Using Time Variable Matrices and Quaternions" - Alvaro Deibe)]<br>
 	Computes the Omega(omega) matrix.<br>
 	N.B.: Omega(omega) appears in the product of a vector and a quaternion, and is used for example in the quaternion derivative.<br>
-	(N.B.: [Eq. 64 Trawny] DOES NOT work properly anymore, probably since q(1) = q\_0 is the scalar part)
+	(N.B.: [Eq. 64 Trawny] DOES NOT work properly anymore, probably since `q(1) = q_0` is the scalar part)
 	* INPUT:
 		* `omega_next` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
 	* OUTPUT:
 		* `Omega__omega` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Omega matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix
 
 
-11. `Omega_avg_omega.m`
+11. __Omega_avg_omega__
 	```matlab
 	function Omega__avg_omega = Omega_avg_omega(omega_next, omega_prev, dt)
 	```
@@ -281,12 +281,12 @@ The __functions__ folder includes a set of MATLAB functions library used by the 
 	* INPUT:
 		* `omega_next` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k+1) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
 		* `omega_prev` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
-		* `dt` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time step (dt = t(k+1) - t(k)) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
+		* `dt` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time step (`dt` = t(k+1) - t(k)) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
 	* OUTPUT:
 		* `Omega__avg_omega` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Omega(omega_avg) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
 
 
-12. `Omega_dot_omega.m`
+12. __Omega_dot_omega__
 	```matlab
 	function Omega__dot_omega = Omega_dot_omega(omega_next, omega_prev, dt)
 	```
@@ -295,12 +295,12 @@ The __functions__ folder includes a set of MATLAB functions library used by the 
 	* INPUT:
 		* `omega_next` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k+1) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
 		* `omega_prev` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
-		* `dt` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time step (dt = t(k+1) - t(k)) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
+		* `dt` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time step (`dt` = t(k+1) - t(k)) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
 	* OUTPUT:
 		* `Omega__dot_omega` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Omega matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix
 
 
-13. `Phi_matrix.m`
+13. __Phi_matrix__
 	```matlab
 	function Phi = Phi_matrix(y_g__next, Phi_mode)
 	```
@@ -308,26 +308,22 @@ The __functions__ folder includes a set of MATLAB functions library used by the 
 	Computes the transition matrix Phi(t + dt, t).
 	* INPUT:
 		* `y_g__next` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Measured angular velocity (i.e., gyro output) y_g(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
-		* `dt` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time step (dt = t(k+1) - t(k))                          scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
 		* `Phi_mode` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Possible values:
-			* 'precise':        [Eq. post-15 Suh]
-			* 'approximated':   [Eq. 16a Suh]
-			* 'Trawny':         [Eq. 187 Trawny]
+			* `precise`:        [Eq. post-15 Suh]
+			* `approximated`:   [Eq. 16a Suh]
+			* `Trawny`:         [Eq. 187 Trawny]
 	* OUTPUT:
 		* `Phi` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Transition matrix Phi(t + dt, t) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (9 x 9) matrix
 
 
-14. `Q_d_matrix.m`
+14. __Q_d_matrix__
 	```matlab
 	function Q_d = Q_d_matrix(y_g__next, Q_d_mode)
 	```
 	[Eq. post-15 Suh] \('precise') OR [Eq. 16b Suh] \('approximated') OR [Eq. 208 Trawny] \('Trawny')<br>
-	Computes the Noise Covariance Matrix Q\_d.
+	Computes the Noise Covariance Matrix `Q_d`.
 	* INPUT:
 		* `y_g__next` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Measured angular velocity (i.e., gyro output) y_g(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
-		* `dt` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time step (dt = t(k+1) - t(k)) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
-		* `time_old` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Current time stamp (t(k+1)) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
-		* `time_new` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Previous time stamp (t(k)) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
 		* `Q_d_mode` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Possible values:
 			* 'precise':        [Eq. post-15 Suh]
 			* 'approximated':   [Eq. 16a Suh]
@@ -335,31 +331,31 @@ The __functions__ folder includes a set of MATLAB functions library used by the 
 		* `Q_d` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Noise Covariance Matrix Q\_d(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (9 x 9) matrix
 
 
-15. `quat2euler.m`
+15. __quat2euler__
 	```matlab
 	function r = quat2euler(q)
 	```
 	[https://marc-b-reynolds.github.io/math/2017/04/18/TaitEuler.html#mjx-eqn%3Aeq%3Atait](https://marc-b-reynolds.github.io/math/2017/04/18/TaitEuler.html#mjx-eqn%3Aeq%3Atait])<br>
 	Converts quaternion to Euler angles.
 	* INPUT:
-		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (`q` = [q0; q1; q2; q3], where the first element, q0, is the scalar part aka real part) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 	* OUTPUT:
-		* `r` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Euler angles (r = [roll; pitch; yaw]) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
+		* `r` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Euler angles (`r` = [roll; pitch; yaw]) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
 
 
-16. `quat2RotMat.m`
+16. __quat2RotMat__
 	```matlab
 	function C_from_q = quat2RotMat(q)
 	```
 	[Eq. 90 Trawny] [Eq. 1 Suh]<br>
-	Computes the rotation matrix associated to the quaternion q.
+	Computes the rotation matrix associated to the quaternion `q`.
 	* INPUT:
-		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (`q` = [q0; q1; q2; q3], where the first element, q0, is the scalar part aka real part) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 	* OUTPUT:
-		* `C_from_q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coordinate transformation matrix associated to q &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `C_from_q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coordinate transformation matrix associated to `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
 
-17. `quatConjugate.m`
+17. __quatConjugate__
 	```matlab
 	function q_conjugate = quatConjugate(q)
 	```
@@ -367,46 +363,45 @@ The __functions__ folder includes a set of MATLAB functions library used by the 
 	Takes the complex conjugate (that is, the inverse for a unit quaternion) of a given quaternion.<br>
 	N.B.: The inverse rotation is described by the inverse or complex conjugate quaternion).
 	* INPUT:
-		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion q(k) (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion q(k) (`q` = [q0; q1; q2; q3], where the first element, q0, is the scalar part aka real part) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 	* OUTPUT:
-		* `q_conjugate` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (not unitary) Quaternion, conjugate of q &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `q_conjugate` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (not unitary) Quaternion, conjugate of `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
 
-18. `quatDerivative.m`
+18. __quatDerivative__
 	```matlab
 	function q_dot = quatDerivative(q, omega)
 	```
 	[Eq. 106 Trawny] OR \[Eq. 2 Suh] (and [Eq. 4 Suh])<br>
 	Computes the quaternion derivative.
 	* INPUT:
-		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (`q` = [q0; q1; q2; q3], where the first element, q0, is the scalar part aka real part) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 		* `omega` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
 	* OUTPUT:
-		* `q_do`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion derivative of q &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [1 / s]
+		* `q_do`, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion derivative of `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [1 / s]
 
 
-19. `quatFirstIntegration.m`
+19. __quatFirstIntegration__
 	```matlab
 	function q_next = quatFirstIntegration(q_prev, omega_next, omega_prev, integration_mode)
 	```
 	[Eq. 18 Suh] \('Suh') OR [Eq. 131 Trawny] \('Trawny') OR [Eq. 8 Yuan] \('Yuan')<br>
-	Computes the first order quaternion integration.
+	Computes the first-order quaternion integration.
 	It makes the assumption of a linear evolution of omega during the integration interval dt.<br>
-	N.B.: DO use 'Suh'; DO NOT use 'Trawny' !!!
+	N.B.: Use `Suh` for `integration_mode`, not `Trawny`.
 	* INPUT:
-		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion q(k) (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion q(k) (`q` = [q0; q1; q2; q3], where the first element, q0, is the scalar part aka real part) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 		* `omega_next` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k+1) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad/s]
 		* `omega_prev` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angular velocity omega(k) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad/s]
-		* `dt` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Integration interval (dt = t(k+1) - t(k)) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [s]
 		* `integration_mode` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modality of integration:
-			* 'Suh',    [Eq. 18 Suh]
-			* 'Trawny', [Eq. 131 Trawny]
-			* 'Yuan',   [Eq. 8 Yuan]
+			* `Suh`,    [Eq. 18 Suh]
+			* `Trawny`, [Eq. 131 Trawny]
+			* `Yuan`,   [Eq. 8 Yuan]
 	* OUTPUT:
-		* `q_next` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; q(k+1); unit quaternion from integration of q &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `q_next` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; q(k+1); unit quaternion from integration of `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
 
-20. `quatInverse.m`
+20. __quatInverse__
 	```matlab
 	function q_inverse = quatInverse(q)
 	```
@@ -414,40 +409,40 @@ The __functions__ folder includes a set of MATLAB functions library used by the 
 	Takes the inverse of a given quaternion.<br>
 	(N.B.: The inverse rotation is described by the inverse - or complex conjugate for unit quaternions quaternion)
 	* INPUT:
-		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion q(k) (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion q(k) (`q` = [q0; q1; q2; q3], where the first element, q0, is the scalar part aka real part) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 	* OUTPUT:
-		* `q_inverse` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (not unitary) Quaternion, inverse of q &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `q_inverse` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (not unitary) Quaternion, the inverse of `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
 
-21. `quatMultiplication.m`
+21. __quatMultiplication__
 	```matlab
 	function q_times_p = quatMultiplication(q, p)
 	```
 	[https://en.wikipedia.org/wiki/Quaternion#Hamilton_product](https://en.wikipedia.org/wiki/Quaternion#Hamilton_product)<br>
-	Multiplies the quaternions q and p, thus obtaining their Hamilton product.<br>
+	Multiplies the quaternions `q` and `p`, thus obtaining their Hamilton product.<br>
 	Please note: the quaternion product is NOT commutative!<br>
 	(N.B.: [Eq. post-5 Trawny] is not used)	
 	* INPUT:
-		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion q(k) (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
-		* `p` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion p(k) (p = [p0; p1; p2; p3], p0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion q(k) (`q` = [q0; q1; q2; q3], where the first element, q0, is the scalar part aka real part) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `p` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion p(k) (`p` = [p0; p1; p2; p3], p0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 	* OUTPUT:
-		* `q_times_p`        (not unitary) Quaternion, product of (in this order) q and p	(4 x 1) vector      [-]
+		* `q_times_p` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (not unitary) Quaternion, the product of (in this order) `q` and `p` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
 
-22. `rand_range.m`
+22. __rand_range__
 	```matlab
 	function x = rand_range(xmin, xmax)
 	```
 	[https://it.mathworks.com/matlabcentral/answers/66763-generate-random-numbers-in-range-from-0-8-to-4](https://it.mathworks.com/matlabcentral/answers/66763-generate-random-numbers-in-range-from-0-8-to-4)<br>
-	Generates a value from the uniform distribution on the interval (xmin, xmax).
+	Generates a value from the uniform distribution on the interval (`xmin`, `xmax`).
 	* INPUT:
 		* `xmin` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Minimum possible value &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 		* `xmax` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maximum possible value &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 	* OUTPUT:
-		* `x` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pseudo-random number in (xmin, xmax) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `x` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pseudo-random number in (`xmin`, `xmax`) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
 
-23. `RotMat2euler.m`
+23. __RotMat2euler__
 	```matlab
 	function r = RotMat2euler(C)
 	```
@@ -460,7 +455,7 @@ The __functions__ folder includes a set of MATLAB functions library used by the 
 		* `r` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Euler angles (r = [roll; pitch; yaw]) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
 
 
-24. `RotMat2quat.m`
+24. __RotMat2quat__
 	```matlab
 	function q = RotMat2quat(C)
 	```
@@ -469,57 +464,57 @@ The __functions__ folder includes a set of MATLAB functions library used by the 
 	* INPUT:
 		* `C` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coordinate transformation matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 	* OUTPUT:
-		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (q = [q0; q1; q2; q3], q0 is the scalar) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `q` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quaternion (`q` = [q0; q1; q2; q3], where the first element, q0, is the scalar part aka real part) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
 
-25. `rotX.m`
+25. __rotX__
 	```matlab
 	function C_x = rotX(alpha)
 	```
-	Computes a basic rotation about x-axis by an angle alpha.
+	Computes a basic rotation about the x-axis by an angle `alpha`.
 	* INPUT:
 		* `alpha` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; angle &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
 	* OUTPUT:
 		* `C` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coordinate transformation matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
 
-26. `rotY.m`
+26. __rotY__
 	```matlab
 	function C_y = rotY(alpha)
 	```
-	Computes a basic rotation about y-axis by an angle alpha.
+	Computes a basic rotation about the y-axis by an angle `alpha`.
 	* INPUT:
 		* `alpha` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; angle &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
 	* OUTPUT:
 		* `C` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coordinate transformation matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
 
-27. `rotZ.m`
+27. __rotZ__
 	```matlab
 	function C_y = rotY(alpha)
 	```
-	Computes a basic rotation about z-axis by an angle alpha.
+	Computes a basic rotation about the z-axis by an angle `alpha`.
 	* INPUT:
 		* `alpha` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; angle &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
 	* OUTPUT:
 		* `C` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Coordinate transformation matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
 
-28. `skewSymmetric.m`
+28. __skewSymmetric__
 	```matlab
 	function skew_symmetric_matrix = skewSymmetric(p)
 	```
 	[Eq. post-9 Suh]<br>
-	Computes the skew-symmetric matrix operator [qx], formed from p.
+	Computes the skew-symmetric matrix operator [px], formed from `p`.
 	* INPUT:
 		* `p` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Possible values:
 			* angular velocity, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad / s]
-			* quaternion, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+			* quaternion (only the vector part (aka imaginary part) of `p` is considered), &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (4 x 1) vector &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 	* OUTPUT:
-		* `skew_symmetric_matrix` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Skew-symmetric matrix formed from p &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
+		* `skew_symmetric_matrix` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Skew-symmetric matrix formed from `p` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (3 x 3) matrix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-]
 
 
-29. `wrapTo90.m`
+29. __wrapTo90__
 	```matlab
 	function alpha_wrapped = wrapTo90(alpha)
 	```
@@ -531,7 +526,7 @@ The __functions__ folder includes a set of MATLAB functions library used by the 
 		* `alpha_wrapped` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Wrapped angle &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [deg]
 
 
-30. `wrapToPi2.m`
+30. __wrapToPi2__
 	```matlab
 	function alpha_wrapped = wrapToPi2(alpha)
 	```
