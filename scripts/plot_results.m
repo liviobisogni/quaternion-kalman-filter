@@ -12,20 +12,19 @@ global ext_acc_detection_time_SUH ext_acc_detection_time_SAB
 %
 % It generates and (potentially) saves all the figures in the .png extension.
 %
-saving_flag = 1;                        % if '1', images (i.e., plots) are saved (as .png files);
-                                        % otherwise, they ain't saved
-title_flag = 1;                         % if '1', titles are added to images;
-                                        % otherwise, they ain't added
+saving_flag = 1;                                                        % if '1', images (i.e., plots) are saved;
+                                                                        % otherwise, they ain't saved
+title_flag = 1;                                                         % if '1', titles are added to images;
+                                                                         % otherwise, they ain't added
 %
-plot_detected_ext_acc = 0;              % if '1', plot external acceleration detection instant dots in the acceleration plot
+plot_detected_ext_acc = 0;                                              % if '1', plot external acceleration detection
+                                                                        % instant dots in the acceleration plot
 %
-images_path = '/Users/a_user_name/Documents/MATLAB/source_code/images';     % It is the folder where images will be saved.
-                                                                            % *** !!! change this path if needed !!! ***
-main_path = '/Users/a_user_name/Documents/MATLAB/source_code';              % It is the folder containing the source code.
-                                                                            % *** !!! change this path if needed !!! ***
-% % images_path = '/Users/v/Documents/MATLAB/attitude_estimation/images';
-% % main_path = '/Users/v/Documents/MATLAB/attitude_estimation';
-
+image_extension = 'png';                                                % pdf, png, ...
+images_path = '/Users/username/Documents/MATLAB/source_code/images';    % It is the folder where images will be saved.
+                                                                        % *** !!! change this path if needed !!! ***
+main_path = '/Users/username/Documents/MATLAB/source_code';             % It is the folder containing the source code.
+                                                                        % *** !!! change this path if needed !!! ***
 %%_________________________________________________________________________
 
 
@@ -171,7 +170,7 @@ if (title_flag == 1)
     t1.Visible = 'on';  % set(t1,'Visible','on');
 end
 if (saving_flag == 1)
-    exportgraphics(gcf, 'Acceleration.png', 'BackgroundColor', 'white')      % crop + white background
+    exportgraphics(gcf, ['Acceleration.', image_extension], 'BackgroundColor', 'white')      % crop + white background
 end
 
 
@@ -233,7 +232,7 @@ if strcmpi(sensor_data, 'synthetic')
         t1.Visible = 'on';  % set(t1,'Visible','on');
     end
     if (saving_flag == 1)
-        exportgraphics(gcf, 'Acceleration Error.png', 'BackgroundColor', 'white')      % crop + white background
+        exportgraphics(gcf, ['Acceleration Error.', image_extension], 'BackgroundColor', 'white')      % crop + white background
     end
 end
 
@@ -289,7 +288,7 @@ if (title_flag == 1)
     t1.Visible = 'on';  % set(t1,'Visible','on');
 end
 if (saving_flag == 1)
-    exportgraphics(gcf, 'Accelerometer Bias Estimation.png', 'BackgroundColor', 'white')      % crop + white background
+    exportgraphics(gcf, ['Accelerometer Bias Estimation.', image_extension], 'BackgroundColor', 'white')      % crop + white background
 end
 
 
@@ -359,7 +358,7 @@ if (title_flag == 1)
     t1.Visible = 'on';  % set(t1,'Visible','on');
 end
 if (saving_flag == 1)
-    exportgraphics(gcf, 'External Acceleration.png', 'BackgroundColor', 'white')      % crop + white background
+    exportgraphics(gcf, ['External Acceleration.', image_extension], 'BackgroundColor', 'white')      % crop + white background
 end
 
 
@@ -457,7 +456,7 @@ if strcmpi(sensor_data, 'synthetic')
         t1.Visible = 'on';  % set(t1,'Visible','on');
     end
     if (saving_flag == 1)
-        exportgraphics(gcf, 'External Acceleration Estimation.png', 'BackgroundColor', 'white')      % crop + white background
+        exportgraphics(gcf, ['External Acceleration Estimation.', image_extension], 'BackgroundColor', 'white')      % crop + white background
     end
 end
 
@@ -522,7 +521,7 @@ if strcmpi(sensor_data, 'synthetic')
         t1.Visible = 'on';  % set(t1,'Visible','on');
     end
     if (saving_flag == 1)
-        exportgraphics(gcf, 'External Acceleration Error.png', 'BackgroundColor', 'white')      % crop + white background
+        exportgraphics(gcf, ['External Acceleration Error.', image_extension], 'BackgroundColor', 'white')      % crop + white background
     end
 end
 
@@ -582,7 +581,7 @@ if strcmpi(sensor_data, 'synthetic')
         t1.Visible = 'on';  % set(t1,'Visible','on');
     end
     if (saving_flag == 1)
-        exportgraphics(gcf, 'Internal Acceleration Estimation.png', 'BackgroundColor', 'white')      % crop + white background
+        exportgraphics(gcf, ['Internal Acceleration Estimation.', image_extension], 'BackgroundColor', 'white')      % crop + white background
     end
 end
 
@@ -642,7 +641,7 @@ if strcmpi(sensor_data, 'synthetic')
         t1.Visible = 'on';  % set(t1,'Visible','on');
     end
     if (saving_flag == 1)
-        exportgraphics(gcf, 'Internal Acceleration Error.png', 'BackgroundColor', 'white')      % crop + white background
+        exportgraphics(gcf, ['Internal Acceleration Error.', image_extension], 'BackgroundColor', 'white')      % crop + white background
     end
 end
 
@@ -710,7 +709,7 @@ if (title_flag == 1)
     t1.Visible = 'on';  % set(t1,'Visible','on');
 end
 if (saving_flag == 1)
-    exportgraphics(gcf, 'Angular Velocity.png', 'BackgroundColor', 'white')      % crop + white background
+    exportgraphics(gcf, ['Angular Velocity.', image_extension], 'BackgroundColor', 'white')      % crop + white background
 end
 
 
@@ -780,7 +779,7 @@ if (title_flag == 1)
     t1.Visible = 'on';  % set(t1,'Visible','on');
 end
 if (saving_flag == 1)
-    exportgraphics(gcf, 'Angular Velocity Estimation.png', 'BackgroundColor', 'white')      % crop + white background
+    exportgraphics(gcf, ['Angular Velocity Estimation.', image_extension], 'BackgroundColor', 'white')      % crop + white background
 end
 
 
@@ -839,7 +838,7 @@ if strcmpi(sensor_data, 'synthetic')
         t1.Visible = 'on';  % set(t1,'Visible','on');
     end
     if (saving_flag == 1)
-        exportgraphics(gcf, 'Angular Velocity Error.png', 'BackgroundColor', 'white')      % crop + white background
+        exportgraphics(gcf, ['Angular Velocity Error.', image_extension], 'BackgroundColor', 'white')      % crop + white background
     end
 end
 
@@ -895,7 +894,7 @@ if (title_flag == 1)
     t1.Visible = 'on';  % set(t1,'Visible','on');
 end
 if (saving_flag == 1)
-    exportgraphics(gcf, 'Gyroscope Bias Estimation.png', 'BackgroundColor', 'white')      % crop + white background
+    exportgraphics(gcf, ['Gyroscope Bias Estimation.', image_extension], 'BackgroundColor', 'white')      % crop + white background
 end
 
 
@@ -959,7 +958,7 @@ if (title_flag == 1)
     t1.Visible = 'on';  % set(t1,'Visible','on');
 end
 if (saving_flag == 1)
-    exportgraphics(gcf, 'Euler Angles Estimation.png', 'BackgroundColor', 'white')      % crop + white background
+    exportgraphics(gcf, ['Euler Angles Estimation.', image_extension], 'BackgroundColor', 'white')      % crop + white background
 end
 
 
@@ -1023,7 +1022,7 @@ if (title_flag == 1)
     t1.Visible = 'on';  % set(t1,'Visible','on');
 end
 if (saving_flag == 1)
-    exportgraphics(gcf, 'Euler Angles Estimation just KF.png', 'BackgroundColor', 'white')      % crop + white background
+    exportgraphics(gcf, ['Euler Angles Estimation just KF.', image_extension], 'BackgroundColor', 'white')      % crop + white background
 end
 
 
@@ -1103,7 +1102,7 @@ if (title_flag == 1)
     t1.Visible = 'on';  % set(t1,'Visible','on');
 end
 if (saving_flag == 1)
-    exportgraphics(gcf, 'Euler Angles Error Global.png', 'BackgroundColor', 'white')      % crop + white background
+    exportgraphics(gcf, ['Euler Angles Error Global.', image_extension], 'BackgroundColor', 'white')      % crop + white background
 end
 
 
@@ -1183,7 +1182,7 @@ if (title_flag == 1)
     t1.Visible = 'on';  % set(t1,'Visible','on');
 end
 if (saving_flag == 1)
-    exportgraphics(gcf, 'Euler Angles Error KF.png', 'BackgroundColor', 'white')      % crop + white background
+    exportgraphics(gcf, ['Euler Angles Error KF.', image_extension], 'BackgroundColor', 'white')      % crop + white background
 end
 
 
@@ -1250,7 +1249,7 @@ if (title_flag == 1)
     t1.Visible = 'on';  % set(t1,'Visible','on');
 end
 if (saving_flag == 1)
-    exportgraphics(gcf, 'Magnetic Field.png', 'BackgroundColor', 'white')      % crop + white background
+    exportgraphics(gcf, ['Magnetic Field.', image_extension], 'BackgroundColor', 'white')      % crop + white background
 end
 
 
@@ -1320,7 +1319,7 @@ if (title_flag == 1)
     t1.Visible = 'on';  % set(t1,'Visible','on');
 end
 if (saving_flag == 1)
-    exportgraphics(gcf, 'Magnetic Field Estimation.png', 'BackgroundColor', 'white')      % crop + white background
+    exportgraphics(gcf, ['Magnetic Field Estimation.', image_extension], 'BackgroundColor', 'white')      % crop + white background
 end
 
 
@@ -1379,7 +1378,7 @@ if strcmpi(sensor_data, 'synthetic')
         t1.Visible = 'on';  % set(t1,'Visible','on');
     end
     if (saving_flag == 1)
-        exportgraphics(gcf, 'Magnetic Field Error.png', 'BackgroundColor', 'white')      % crop + white background
+        exportgraphics(gcf, ['Magnetic Field Error.', image_extension], 'BackgroundColor', 'white')      % crop + white background
     end
 end
 
@@ -1462,7 +1461,7 @@ if (title_flag == 1)
     t1.Visible = 'on';  % set(t1,'Visible','on');
 end
 if (saving_flag == 1)
-    exportgraphics(gcf, 'Quaternion Estimation.png', 'BackgroundColor', 'white')      % crop + white background
+    exportgraphics(gcf, ['Quaternion Estimation.', image_extension], 'BackgroundColor', 'white')      % crop + white background
 end
 
 
@@ -1544,7 +1543,7 @@ if (title_flag == 1)
     t1.Visible = 'on';  % set(t1,'Visible','on');
 end
 if (saving_flag == 1)
-    exportgraphics(gcf, 'Quaternion Error.png', 'BackgroundColor', 'white')      % crop + white background
+    exportgraphics(gcf, ['Quaternion Error.', image_extension], 'BackgroundColor', 'white')      % crop + white background
 end
 
 
@@ -1706,7 +1705,7 @@ if (title_flag == 1)
     t1.Visible = 'on';  % set(t1,'Visible','on');
 end
 if (saving_flag == 1)
-    exportgraphics(gcf, 'Q Matrices.png', 'BackgroundColor', 'white')      % crop + white background
+    exportgraphics(gcf, ['Q Matrices.', image_extension], 'BackgroundColor', 'white')      % crop + white background
 end
 
 
@@ -1737,7 +1736,7 @@ if strcmpi(sensor_data, 'real')
         t1.Visible = 'on';  % set(t1,'Visible','on');
     end
     if (saving_flag == 1)
-        exportgraphics(gcf, 'dt.png', 'BackgroundColor', 'white')      % crop + white background
+        exportgraphics(gcf, ['dt.', image_extension], 'BackgroundColor', 'white')      % crop + white background
     end
 end
 
@@ -1770,7 +1769,7 @@ if strcmpi(sensor_data, 'real')
         t1.Visible = 'on';  % set(t1,'Visible','on');
     end
     if (saving_flag == 1)
-        exportgraphics(gcf, 'dt_cumulative_error.png', 'BackgroundColor', 'white')      % crop + white background
+        exportgraphics(gcf, ['dt_cumulative_error.', image_extension], 'BackgroundColor', 'white')      % crop + white background
     end
 end
 
