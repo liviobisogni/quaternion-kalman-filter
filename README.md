@@ -14,7 +14,7 @@ This project aimed to estimate the attitude of a vehicle using measurements from
 	<span> • </span>
 	<a href="doc/presentation.pdf">Presentation</a>
 	<span> • </span>
-	<a href="#sample-images">Sample Images</a>
+	<a href="#indirect-kalman-filter">Indirect Kalman Filter</a>
 </p>
 
 
@@ -34,7 +34,7 @@ This project aimed to estimate the attitude of a vehicle using measurements from
 2. Add your flight data to the __data__ folder
 3. If desired, edit the scripts in the __scripts__ folder according to your needs as detailed [here](#scripts)
 4. Run the `main.m` script
-5. If the 'saving_flag' is turned on in the `plot_results.m` script, figures will be saved as .png files in the __img__ folder
+5. If the 'saving_flag' is turned on in the `plot_results.m` script, figures will be saved in the __img__ folder
 
 
 ## Folders
@@ -54,7 +54,7 @@ The images presented in the [presentation](doc/presentation.pdf) were generated 
 
 
 ## Images
-The __img__ folder contains the images (.png) generated and saved by the `plot_results.m` script.
+The __img__ folder contains the images generated and saved by the `plot_results.m` script.
 
 
 ## <a id="scripts"></a>Scripts
@@ -85,9 +85,9 @@ This script generates synthetic data.<br>
 		* bias_gyro: If `ON`, it adds bias to gyroscope measurements
 		* bias_acc: If `ON`, it adds bias to accelerometer measurements
 		* ext_acc: If `ON`, it creates 3 external accelerations:
-			* [10; 5; 20] from 80 to 81 s
-			* [0; -7; 0] from 120 to 122 s
-			* [-4; -3; 8] from 140 to 140.5 s
+			* $[10 m/s², 5 m/s², 20 m/s²]^T$ from $80 s$ to $81 s$
+			* $[0 m/s², -7 m/s², 0 m/s²]^T$ from $120 s$ to $122 s$
+			* $[-4 m/s², -3 m/s², 8 m/s²]^T$ from $140 s$ to $140.5 s$
 
 2. __`import_real_data.m`__<br>
 This script loads real data from the __data__ folder (the specific folder to be used is determined within the code.).<br>
@@ -119,11 +119,12 @@ This is the main script that should be executed on Matlab.<br>
 		* `real`: Load sequence of angular velocity, acceleration, magnetic field, and attitude measured by real sensors (gyroscope, accelerometer, magnetometer, and inclinometer, respectively). See `import_real_data.m` for further details.
 
 7. __`plot_results.m`__<br>
-This script has the capability to generate and, if desired, save all figures in the .png format. Users can customize the settings by selecting from the following options:
+This script has the capability to generate and, if desired, save all figures in the desired format (.png, .pdf, etc.). Users can customize the settings by selecting from the following options:
 
-	* `saving_flag`: set this to `1` to save the generated plots as .png files, and set it to any other value to disable saving.
+	* `saving_flag`: set this to `1` to save the generated plots in the desired format (specified in `image_extension`), and set it to any other value to disable saving.
 	* `title_flag`: set this to `1` to enable adding titles to the generated plots, and set it to any other value to disable adding titles.
 	* `plot_detected_ext_acc`: set this to `1` to display detected external acceleration instant dots on the acceleration plot, and set it to any other value to disable displaying detected external acceleration instant dots.
+	* `image_extension`: specify the format for saving the images. This can include file types such as .png, .pdf, and so on.
 	* `images_path`: set this variable to the folder path where you want to save the generated images (e.g., _'/Users/a\_user\_name/Documents/MATLAB/quaternion-kalman-filter/images'_). Modify the path as needed.
 	* `main_path`: set this variable to the folder path where the source code is located (e.g., _'/Users/a\_user\_name/Documents/MATLAB/quaternion-kalman-filter'_). Modify the path as needed.
 
@@ -519,7 +520,7 @@ The __functions__ folder includes a set of MATLAB functions library used by the 
 	function alpha_wrapped = wrapTo90(alpha)
 	```
 	[https://it.mathworks.com/matlabcentral/answers/324032-how-to-wrap-angle-in-radians-to-pi-2-pi-2](https://it.mathworks.com/matlabcentral/answers/324032-how-to-wrap-angle-in-radians-to-pi-2-pi-2)<br>
-	Wraps the given angle to [-90, +90].
+	Wraps the given angle to $[-90\degree, 90\degree]$.
 	* INPUT:
 		* `alpha` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angle &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [deg]
 	* OUTPUT:
@@ -531,8 +532,25 @@ The __functions__ folder includes a set of MATLAB functions library used by the 
 	function alpha_wrapped = wrapToPi2(alpha)
 	```
 	[https://it.mathworks.com/matlabcentral/answers/324032-how-to-wrap-angle-in-radians-to-pi-2-pi-2](https://it.mathworks.com/matlabcentral/answers/324032-how-to-wrap-angle-in-radians-to-pi-2-pi-2)<br>
-	Wraps the given angle to [-pi/2, +pi/2].
+	Wraps the given angle to $[-\pi/2, \pi/2]$.
 	* INPUT:
 		* `alpha` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Angle &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
 	* OUTPUT:
 		* `alpha_wrapped` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Wrapped angle &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scalar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [rad]
+
+
+## <a id="indirect-kalman-filter"></a>Indirect Kalman Filter
+
+The objective of the filter is to estimate the attitude quaternion $q$, i.e., $\hat{q}$, from the sensor outputs $y_g$ (gyroscope), $y_a$ (accelerometer), and $y_m$ (magnetometer).
+It consists of two phases, which alternate:
+
+1. The __propagation stage__, where the filter produces a prediction of the
+attitude $\hat{q}$ based on the previous estimate of the state $𝑥 = [q_e, b_g, b_a]^T$, i.e., $\hat{𝑥} = [\hat{q}_e, \hat{b}_g, \hat{b}_a]^T$,and the most recent gyroscope output $y_g$.
+2. The __update stage__, which corrects the values predicted in the propagation stage. It consists of a two-step measurement update:
+	
+	1. An _accelerometer measurement update_, where the most recent accelerometer output $y_a$ is used
+	2. A _magnetometer measurement update_, where the most recent magnetometer output $y_m$ is used
+
+<p align="center" width="100%">
+    <img width="75%" src="img/IKF.png"> 
+</p>
